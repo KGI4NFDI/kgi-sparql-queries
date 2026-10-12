@@ -1,0 +1,4 @@
+#!/bin/bash
+# check this project against BITPlan's open source project conventions
+# checkos is part of pyOpenSourceProjects, which snapquery installs
+checkos --local --workspace "$(dirname "$PWD")" --project "$(basename "$PWD")" --verbose
