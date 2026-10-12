@@ -1,0 +1,4 @@
+#!/bin/bash
+# build the image and run the harvest in it, writing into this repository
+docker build -t kgi-sparql-queries . &&
+  docker run --rm --user "$(id -u):$(id -g)" -v "$PWD":/work kgi-sparql-queries

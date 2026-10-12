@@ -1,0 +1,3 @@
+#!/bin/bash
+isort kgi_example_queries tests
+black kgi_example_queries tests
