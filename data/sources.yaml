@@ -6,3 +6,9 @@ sources:
     domain: wikidata.org
     graph: wikidata
     url: https://www.wikidata.org/wiki/Wikidata:SPARQL_query_service/queries/examples
+  - id: KGR51
+    name: Semantic Kompakkt
+    namespace: examples
+    domain: semantic-kompakkt.de
+    graph: semantic-kompakkt
+    url: https://wikibase.semantic-kompakkt.de/wiki/Query/Examples
