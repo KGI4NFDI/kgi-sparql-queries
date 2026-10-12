@@ -1,0 +1,10 @@
+__pycache__/
+*.egg-info/
+build/
+dist/
+.venv/
+.claude/
+
+# mkdocs: scripts/doc generates both docs/index.md and site/
+/docs/
+/site/
