@@ -1,0 +1,41 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "kgi-example-queries"
+dynamic = ["version"]
+description = "Example SPARQL queries of the KGI4NFDI registry and of its individual knowledge graphs"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+]
+dependencies = [
+  "snapquery>=0.2.5",
+  "PyYAML>=6",
+]
+
+[project.scripts]
+kgi-queries = "kgi_example_queries.cli:main"
+
+[tool.hatch.version]
+path = "kgi_example_queries/__init__.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["kgi_example_queries"]
+
+[tool.hatch.build.targets.wheel.sources]
+"kgi_example_queries" = "kgi_example_queries"
+
+[tool.black]
+line-length = 120
+
+[tool.isort]
+profile = "black"
+line_length = 120
