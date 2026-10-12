@@ -1,8 +1,17 @@
 # where each knowledge graph publishes its example queries
+# format: wikitext (the page source is fetched) or html (the rendered page is fetched)
 sources:
   - id: KGR69
     name: Wikidata
     namespace: examples
     domain: wikidata.org
     graph: wikidata
+    format: wikitext
     url: https://www.wikidata.org/wiki/Wikidata:SPARQL_query_service/queries/examples
+  - id: KGR28
+    name: MaRDI portal
+    namespace: examples
+    domain: portal.mardi4nfdi.de
+    graph: mardi
+    format: html
+    url: https://portal.mardi4nfdi.de/wiki/Project:Sample_queries
