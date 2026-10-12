@@ -18,3 +18,9 @@ sources:
     domain: akf.kgi.uni-mannheim.de
     graph: akf
     url: https://akf.kgi.uni-mannheim.de/wiki/SPARQL_examples
+  - id: KGR31
+    name: MaschinenBauIndustrie KG
+    namespace: examples
+    domain: mbi.kgi.uni-mannheim.de
+    graph: mbi
+    url: https://mbi.kgi.uni-mannheim.de/wiki/SPARQL_examples
