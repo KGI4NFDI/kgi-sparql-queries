@@ -12,3 +12,9 @@ sources:
     domain: semantic-kompakkt.de
     graph: semantic-kompakkt
     url: https://wikibase.semantic-kompakkt.de/wiki/Query/Examples
+  - id: KGR1
+    name: Aktienführer Knowledge Graph
+    namespace: examples
+    domain: akf.kgi.uni-mannheim.de
+    graph: akf
+    url: https://akf.kgi.uni-mannheim.de/wiki/SPARQL_examples
