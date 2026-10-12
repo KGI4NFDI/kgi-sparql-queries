@@ -1,0 +1,88 @@
+domain: portal.mardi4nfdi.de
+namespace: examples
+target_graph_name: mardi
+queries:
+- name: Select All Triples
+  namespace: examples
+  domain: portal.mardi4nfdi.de
+  query_id: select-all-triples--examples@portal.mardi4nfdi.de
+  sparql: SELECT * WHERE { ?a ?b ?c }
+  url: https://portal.mardi4nfdi.de/wiki/Project:Sample_queries#Select_All_Triples
+  title: Select All Triples
+  description: ''
+- name: Select All Triples relating to Q1
+  namespace: examples
+  domain: portal.mardi4nfdi.de
+  query_id: select-all-triples-relating-to-q1--examples@portal.mardi4nfdi.de
+  sparql: SELECT * WHERE { wd:Q1 ?b ?c }
+  url: https://portal.mardi4nfdi.de/wiki/Project:Sample_queries#Select_All_Triples_relating_to_Q1
+  title: Select All Triples relating to Q1
+  description: ''
+- name: Find all roles of expressions sorted by usage frequency
+  namespace: examples
+  domain: portal.mardi4nfdi.de
+  query_id: find-all-roles-of-expressions-sorted-by-usage-frequency--examples@portal.mardi4nfdi.de
+  sparql: "SELECT ?rolesEquationLabel ?rolesEquationDescription (COUNT(*) AS ?count)\
+    \ ?rolesEquation\nWHERE {\n  ?URL wdt:P1495 wd:Q6534265 .\n  ?URL ?p ?statement\
+    \ .\n  FILTER(STRSTARTS(STR(?p), \"https://portal.mardi4nfdi.de/prop/\"))  # keep\
+    \ statement nodes\n  \n  # Main value of the statement (ps:)\n  ?statement ?ps\
+    \ ?mainValue .\n  FILTER(STRSTARTS(STR(?ps), STR(ps:)))\n  \n  # Get the instance-of\
+    \ class of the value\n  ?mainValue wdt:P31 ?valueClass .\n  \n  # Keep only values\
+    \ whose class is exactly Q6481152\n  FILTER(?valueClass = <https://portal.mardi4nfdi.de/entity/Q6481152>)\n\
+    \  \n  # Qualifier values (pq:)\n  ?statement ?pq ?rolesEquation .\n  FILTER(STRSTARTS(STR(?pq),\
+    \ STR(pq:)))\n  \n  # Map qualifier IRI to property entity\n  BIND(IRI(REPLACE(STR(?pq),\n\
+    \                    \"https://portal.mardi4nfdi.de/prop/qualifier/\",\n     \
+    \               \"https://portal.mardi4nfdi.de/entity/\")) AS ?qualifier)\n  \n\
+    \  # Keep only qualifier that refer to object has role P560\n  FILTER(?qualifier\
+    \ = <https://portal.mardi4nfdi.de/entity/P560>)\n  \n  # Get labels for all entities\n\
+    \  SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\"\
+    . }\n}\nGROUP BY ?rolesEquationLabel ?rolesEquationDescription ?rolesEquation\n\
+    ORDER BY DESC(?count)"
+  url: https://portal.mardi4nfdi.de/wiki/Project:Sample_queries#Find_all_roles_of_expressions_sorted_by_usage_frequency
+  title: Find all roles of expressions sorted by usage frequency
+  description: ''
+- name: Find all discrete-time expressions
+  namespace: examples
+  domain: portal.mardi4nfdi.de
+  query_id: find-all-discrete-time-expressions--examples@portal.mardi4nfdi.de
+  sparql: |-
+    SELECT DISTINCT ?expressionLabel ?expressionDescription ?expression
+    WHERE {
+      ?expression wdt:P1495 wd:Q6534265 ;
+            wdt:P31 ?instanceOf .
+      VALUES ?instanceOf { wd:Q6672095 wd:Q6672094 wd:Q6775547 wd:Q6775548 wd:Q6775549 }
+      SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+    }
+    ORDER BY ?expressionLabel
+  url: https://portal.mardi4nfdi.de/wiki/Project:Sample_queries#Find_all_discrete-time_expressions
+  title: Find all discrete-time expressions
+  description: ''
+- name: Find all models containing at least one ODE (ordinary differential equation)
+  namespace: examples
+  domain: portal.mardi4nfdi.de
+  query_id: find-all-models-containing-at-least-one-ode-ordinary-differential-equation--examples@portal.mardi4nfdi.de
+  sparql: "SELECT DISTINCT ?itemLabel ?item  \nWHERE {\n  # item belongs to community\
+    \ MathModDB\n  # and item is instance of a mathematical model\n  ?item wdt:P1495\
+    \ wd:Q6534265 ;\n        wdt:P31 wd:Q68663 .\n  # all P1560 statements\n  ?item\
+    \ wdt:P1560 ?containedItem .\n  \n  # instance of ordinary differential equation\n\
+    \  ?containedItem wdt:P31 wd:Q6481447 .\n\n  OPTIONAL {\n    ?item rdfs:label\
+    \ ?itemLabel .\n    FILTER (LANG(?itemLabel) = \"en\")\n  }\n}\nORDER BY ?itemLabel"
+  url: https://portal.mardi4nfdi.de/wiki/Project:Sample_queries#Find_all_models_containing_at_least_one_ODE_(ordinary_differential_equation)
+  title: Find all models containing at least one ODE (ordinary differential equation)
+  description: ''
+- name: Find all items with QUDT quantity kind ID
+  namespace: examples
+  domain: portal.mardi4nfdi.de
+  query_id: find-all-items-with-qudt-quantity-kind-id--examples@portal.mardi4nfdi.de
+  sparql: |-
+    SELECT DISTINCT ?itemLabel ?item ?itemDescription ?QUDTid
+    WHERE {
+      ?item wdt:P1495 wd:Q6534265 ;
+            wdt:P1654   ?QUDTOnlyid .
+      SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+      BIND(IRI(CONCAT("https://qudt.org/vocab/quantitykind/", ?QUDTOnlyid)) AS ?QUDTid)
+    }
+    ORDER BY ?itemLabel
+  url: https://portal.mardi4nfdi.de/wiki/Project:Sample_queries#Find_all_items_with_QUDT_quantity_kind_ID
+  title: Find all items with QUDT quantity kind ID
+  description: ''
