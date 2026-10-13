@@ -6,3 +6,9 @@ sources:
     domain: wikidata.org
     graph: wikidata
     url: https://www.wikidata.org/wiki/Wikidata:SPARQL_query_service/queries/examples
+  - id: KGR28
+    name: MaRDI portal
+    namespace: examples
+    domain: portal.mardi4nfdi.de
+    graph: mardi
+    url: https://portal.mardi4nfdi.de/wiki/Project:Sample_queries
