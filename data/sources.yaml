@@ -9,3 +9,39 @@ sources:
     graph: wikidata
     format: wikitext
     url: https://www.wikidata.org/wiki/Wikidata:SPARQL_query_service/queries/examples
+  - id: KGR4
+    name: ClaimsKG
+    namespace: claimskg
+    domain: data.gesis.org
+    graph: claimskg
+    url: https://data.gesis.org/claimskg
+  - id: KGR80
+    name: GESIS KG
+    namespace: gesiskg
+    domain: data.gesis.org
+    graph: gesiskg
+    url: https://data.gesis.org/gesiskg/
+  - id: KGR48
+    name: Question Features Sample
+    namespace: questionfeaturessample
+    domain: data.gesis.org
+    graph: questionfeaturessample
+    url: https://data.gesis.org/questionfeaturessample
+  - id: KGR57
+    name: SoMeSci
+    namespace: somesci
+    domain: data.gesis.org
+    graph: somesci
+    url: https://data.gesis.org/somesci
+  - id: KGR62
+    name: TweetsCov19
+    namespace: tweetscov19
+    domain: data.gesis.org
+    graph: tweetscov19
+    url: https://data.gesis.org/tweetscov19/
+  - id: KGR65
+    name: TweetsKB
+    namespace: tweetskb
+    domain: data.gesis.org
+    graph: tweetskb
+    url: https://data.gesis.org/tweetskb
