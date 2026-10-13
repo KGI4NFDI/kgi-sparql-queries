@@ -1,8 +1,11 @@
 # where each knowledge graph publishes its example queries
+# a source is an HTML page with the queries in pre or textarea elements,
+# or with format: wikitext a wiki page with the queries in SPARQL templates
 sources:
   - id: KGR69
     name: Wikidata
     namespace: examples
     domain: wikidata.org
     graph: wikidata
+    format: wikitext
     url: https://www.wikidata.org/wiki/Wikidata:SPARQL_query_service/queries/examples
