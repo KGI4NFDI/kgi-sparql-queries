@@ -24,7 +24,7 @@ def load_sources(path: str = "data/sources.yaml") -> List[dict]:
     return sources
 
 
-def harvest_source(source: dict, wikitext: Optional[str] = None) -> NamedQuerySet:
+def harvest_wikitext(source: dict, wikitext: Optional[str] = None) -> NamedQuerySet:
     """
     extract the example queries of a Wikibase examples page
 
@@ -57,7 +57,7 @@ def harvest() -> int:
     """
     exit_code = 0
     for source in load_sources():
-        query_set = harvest_source(source)
+        query_set = harvest_wikitext(source)
         if len(query_set) == 0:
             print(f"{source['id']} {source['name']}: no queries found, nothing written")
             exit_code = 1
