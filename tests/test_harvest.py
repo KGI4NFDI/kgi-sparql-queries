@@ -1,6 +1,6 @@
 import unittest
 
-from kgi_example_queries.harvest import harvest_source, load_sources
+from kgi_example_queries.harvest import harvest_wikitext, load_sources
 
 WIKITEXT = """
 == Cats ==
@@ -23,12 +23,12 @@ class TestHarvest(unittest.TestCase):
         for source in sources:
             self.assertTrue(source["url"].startswith("https://"), source["id"])
 
-    def test_harvest_source(self):
+    def test_harvest_wikitext(self):
         """
         test that a page becomes a snapquery named query set
         """
         source = load_sources()[0]
-        query_set = harvest_source(source, WIKITEXT)
+        query_set = harvest_wikitext(source, WIKITEXT)
         self.assertEqual(1, len(query_set))
         query = query_set.queries[0]
         self.assertEqual("Cats", query.name)
