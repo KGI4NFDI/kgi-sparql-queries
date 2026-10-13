@@ -1,0 +1,105 @@
+domain: data.gesis.org
+namespace: questionfeaturessample
+target_graph_name: questionfeaturessample
+queries:
+- name: Example queries 1
+  namespace: questionfeaturessample
+  domain: data.gesis.org
+  query_id: example-queries-1--questionfeaturessample@data.gesis.org
+  sparql: |-
+    PREFIX disco: <http://rdf-vocabulary.ddialliance.org/discovery#>
+    PREFIX skos: <http://www.w3/2004/02/skos/core#>
+    PREFIX qf: <http://data.gesis.org/questionfeatures#>
+    PREFIX dct: <http://purl.org/dc/terms/>
+
+    SELECT ?qt ?inf_type WHERE
+    {
+        ?study a disco:Study .
+        ?study skos:prefLabel "ZA2493" .
+        ?study disco:variable ?var .
+        ?var disco:question ?quest .
+        ?quest disco:questionText ?qt .
+        ?quest qf:conceptualQuestion [
+            qf:problem [
+                qf:informationType ?inf_type
+            ]
+        ]
+    }
+  url: https://data.gesis.org/questionfeaturessample
+  title: Example queries 1
+  description: ''
+- name: Example queries 2
+  namespace: questionfeaturessample
+  domain: data.gesis.org
+  query_id: example-queries-2--questionfeaturessample@data.gesis.org
+  sparql: |-
+    PREFIX disco: <http://rdf-vocabulary.ddialliance.org/discovery#>
+    PREFIX skos: <http://www.w3/2004/02/skos/core#>
+    PREFIX qf: <http://data.gesis.org/questionfeatures#>
+    PREFIX dct: <http://purl.org/dc/terms/>
+
+    SELECT DISTINCT ?qt WHERE
+    {
+        ?study a disco:Study .
+        ?study skos:prefLabel "ZA3811" .
+        ?study disco:variable ?var .
+        ?var disco:question ?quest .
+        ?quest disco:questionText ?qt .
+        ?quest qf:conceptualQuestion [
+            qf:problem [
+                qf:informationType qf:InformationType_Demography
+            ]
+        ]
+    }
+  url: https://data.gesis.org/questionfeaturessample
+  title: Example queries 2
+  description: ''
+- name: Example queries 3
+  namespace: questionfeaturessample
+  domain: data.gesis.org
+  query_id: example-queries-3--questionfeaturessample@data.gesis.org
+  sparql: |-
+    PREFIX disco: <http://rdf-vocabulary.ddialliance.org/discovery#>
+    PREFIX skos: <http://www.w3/2004/02/skos/core#>
+    PREFIX qf: <http://data.gesis.org/questionfeatures#>
+    PREFIX dct: <http://purl.org/dc/terms/>
+
+    SELECT DISTINCT ?inf_type WHERE
+    {
+        ?study a disco:Study .
+        ?study skos:prefLabel "ZA2493" .
+        ?study disco:variable ?var .
+        ?var disco:question ?quest .
+        ?quest qf:conceptualQuestion [
+            qf:problem [
+                qf:informationType ?inf_type
+            ]
+        ]
+    }
+  url: https://data.gesis.org/questionfeaturessample
+  title: Example queries 3
+  description: ''
+- name: Example queries 4
+  namespace: questionfeaturessample
+  domain: data.gesis.org
+  query_id: example-queries-4--questionfeaturessample@data.gesis.org
+  sparql: |-
+    PREFIX disco: <http://rdf-vocabulary.ddialliance.org/discovery#>
+    PREFIX skos: <http://www.w3/2004/02/skos/core#>
+    PREFIX qf: <http://data.gesis.org/questionfeatures#>
+    PREFIX dct: <http://purl.org/dc/terms/>
+
+    SELECT DISTINCT ?answer_text WHERE
+    {
+        ?quest qf:conceptualQuestion [
+            qf:problem [
+                qf:informationType qf:InformationType_Fact
+            ]
+        ] .
+        ?quest disco:responseDomain ?rd .
+        ?ans skos:inScheme ?rd .
+        ?ans skos:prefLabel ?answer_text .
+    }
+  url: https://data.gesis.org/questionfeaturessample
+  title: Example queries 4
+  description: ''
