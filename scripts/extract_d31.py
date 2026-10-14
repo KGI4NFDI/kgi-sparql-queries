@@ -16,6 +16,9 @@ the next empty line. This finds all 29 queries, but cuts 14 of them wrong.
 
 Rule 2: page numbers and the empty lines at the top of a page are dropped, so a
 query crossing a page break stays whole. 12 are still cut wrong.
+
+Rule 3: a caption "Listing 1.n." also ends a query and names the query above it.
+7 are still cut wrong.
 """
 
 import re
@@ -36,6 +39,7 @@ USER_AGENT = "kgi-sparql-queries (https://github.com/KGI4NFDI/kgi-sparql-queries
 DOMAIN = "kgi.services.base4nfdi.de"
 
 START = re.compile(r"^\s*(#|PREFIX\b|SELECT\b)")
+CAPTION = re.compile(r"^\s*(Listing \d+\.\d+)\.")
 HEADING = re.compile(r"^(Q\d+[a-d]?|Story \d)\.? ")
 QUERY_FORM = re.compile(r"\b(SELECT|ASK|CONSTRUCT|DESCRIBE)\b")
 
@@ -92,6 +96,9 @@ def find_queries(lines: List[tuple]) -> List[Dict]:
     heading = None
     for page, line in lines:
         if block is None:
+            caption = CAPTION.match(line)
+            if caption and blocks and "name" not in blocks[-1]:
+                blocks[-1]["name"] = caption.group(1)
             match = HEADING.match(line)
             # the table of contents repeats the headings, followed by dots
             if match and "...." not in line:
@@ -99,7 +106,10 @@ def find_queries(lines: List[tuple]) -> List[Dict]:
             if START.match(line):
                 block = {"heading": heading, "page": page, "lines": [line]}
             continue
-        if line.strip():
+        caption = CAPTION.match(line)
+        if caption:
+            block["name"] = caption.group(1)
+        elif line.strip():
             block["lines"].append(line)
             continue
         blocks.append(block)
