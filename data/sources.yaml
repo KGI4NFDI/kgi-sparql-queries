@@ -1,4 +1,5 @@
 # where each knowledge graph publishes its example queries
+# format: pinned for a query set written by a script in scripts/, kept by the harvest
 sources:
   - id: KGR69
     name: Wikidata
@@ -6,3 +7,17 @@ sources:
     domain: wikidata.org
     graph: wikidata
     url: https://www.wikidata.org/wiki/Wikidata:SPARQL_query_service/queries/examples
+  - id: D31
+    name: KGI4NFDI deliverable D3.1, Q1 to Q16d
+    namespace: d3.1
+    domain: kgi.services.base4nfdi.de
+    graph: kgi-registry
+    format: pinned
+    url: https://doi.org/10.5281/zenodo.15780729
+  - id: D31S
+    name: KGI4NFDI deliverable D3.1, query exploration stories
+    namespace: d3.1-stories
+    domain: kgi.services.base4nfdi.de
+    graph: various
+    format: pinned
+    url: https://doi.org/10.5281/zenodo.15780729

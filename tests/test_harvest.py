@@ -1,5 +1,7 @@
 import unittest
 
+import yaml
+
 from kgi_example_queries.harvest import harvest_source, load_sources
 
 WIKITEXT = """
@@ -34,3 +36,16 @@ class TestHarvest(unittest.TestCase):
         self.assertEqual("Cats", query.name)
         self.assertEqual("cats--examples@wikidata.org", query.query_id)
         self.assertIn("wd:Q146", query.sparql)
+
+    def test_pinned_sources(self):
+        """
+        test that the committed query sets of the pinned D3.1 sources are complete
+        """
+        expected = {"d3.1": 20, "d3.1-stories": 9}
+        for source in load_sources():
+            if source.get("format") != "pinned":
+                continue
+            path = f"query-sets/{source['namespace']}@{source['domain']}.yaml"
+            with open(path, encoding="utf-8") as yaml_file:
+                query_set = yaml.safe_load(yaml_file)
+            self.assertEqual(expected[source["namespace"]], len(query_set["queries"]), path)
