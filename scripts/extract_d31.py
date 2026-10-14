@@ -11,8 +11,11 @@ Usage, from the repository root:
 
 The text is read with pypdf in plain mode; its layout mode inserts spaces inside IRIs.
 
-Rule: a query starts at a line beginning with #, PREFIX or SELECT and ends at the
-next empty line. This finds all 29 queries, but cuts 14 of them wrong.
+Rule 1: a query starts at a line beginning with #, PREFIX or SELECT and ends at
+the next empty line. This finds all 29 queries, but cuts 14 of them wrong.
+
+Rule 2: page numbers and the empty lines at the top of a page are dropped, so a
+query crossing a page break stays whole. 12 are still cut wrong.
 """
 
 import re
@@ -66,8 +69,11 @@ def read_lines(pdf: bytes) -> List[tuple]:
     """
     lines = []
     for number, page in enumerate(pypdf.PdfReader(BytesIO(pdf)).pages, start=1):
-        for line in page.extract_text(extraction_mode="plain").split("\n"):
-            lines.append((number, line))
+        page_lines = page.extract_text(extraction_mode="plain").split("\n")
+        page_lines = [line for line in page_lines if line.strip() != str(number)]
+        while page_lines and not page_lines[0].strip():
+            page_lines.pop(0)
+        lines.extend((number, line) for line in page_lines)
     return lines
 
 
