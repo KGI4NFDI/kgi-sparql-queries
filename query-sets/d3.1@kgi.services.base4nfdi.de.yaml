@@ -1,0 +1,366 @@
+domain: kgi.services.base4nfdi.de
+namespace: d3.1
+target_graph_name: kgi-registry
+queries:
+- name: Q1
+  namespace: d3.1
+  domain: kgi.services.base4nfdi.de
+  query_id: q1--d3.1@kgi.services.base4nfdi.de
+  sparql: |-
+    # Query lists all KGs included in the KGI registry.
+    PREFIX dcat: <http://www.w3.org/ns/dcat#>
+    PREFIX dcterms: <http://purl.org/dc/terms/>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    SELECT ?title ?publisher ?landing_page_url
+    WHERE {
+      # Retrieves basic dataset metadata
+      ?dataset rdf:type dcat:Dataset .
+      ?dataset dcterms:title ?title .
+      ?dataset dcterms:publisher ?publisher .
+      ?dataset dcat:landingPage ?landing_page_url .
+      # Optional: retrieves description
+      OPTIONAL { ?dataset dcterms:description ?description .}
+        # Optional: retrieves URL of SPARQL endpoint
+      OPTIONAL {?dataset dcat:endpointURL ?kg_endpoint .}
+    }
+  url: https://zenodo.org/records/15780729/files/D3.1%20Best%20practices%20and%20guidelines%20for%20metadata%20mapping,%20linking,%20and%20integration.pdf#page=13
+  title: Q1
+  description: ''
+- name: Q2
+  namespace: d3.1
+  domain: kgi.services.base4nfdi.de
+  query_id: q2--d3.1@kgi.services.base4nfdi.de
+  sparql: |-
+    # Query retrieves the total number of triples in a KG
+    SELECT (COUNT(*) AS ?number_of_triples)
+    WHERE {
+      ?subject ?predicate ?object .
+    }
+  url: https://zenodo.org/records/15780729/files/D3.1%20Best%20practices%20and%20guidelines%20for%20metadata%20mapping,%20linking,%20and%20integration.pdf#page=14
+  title: Q2
+  description: ''
+- name: Q3
+  namespace: d3.1
+  domain: kgi.services.base4nfdi.de
+  query_id: q3--d3.1@kgi.services.base4nfdi.de
+  sparql: |-
+    # Get a sample of triples in the KG
+    SELECT *
+    WHERE {
+      ?subject ?predicate ?object.
+    }
+    LIMIT 100
+  url: https://zenodo.org/records/15780729/files/D3.1%20Best%20practices%20and%20guidelines%20for%20metadata%20mapping,%20linking,%20and%20integration.pdf#page=15
+  title: Q3
+  description: ''
+- name: Q4
+  namespace: d3.1
+  domain: kgi.services.base4nfdi.de
+  query_id: q4--d3.1@kgi.services.base4nfdi.de
+  sparql: |-
+    # Get a description of a given resource.
+    DESCRIBE <URI>
+  url: https://zenodo.org/records/15780729/files/D3.1%20Best%20practices%20and%20guidelines%20for%20metadata%20mapping,%20linking,%20and%20integration.pdf#page=16
+  title: Q4
+  description: ''
+- name: Q5
+  namespace: d3.1
+  domain: kgi.services.base4nfdi.de
+  query_id: q5--d3.1@kgi.services.base4nfdi.de
+  sparql: |-
+    # List all distinct entity types in the graph
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    SELECT DISTINCT ?type
+    WHERE {
+      ?subject rdf:type ?type.
+    }
+  url: https://zenodo.org/records/15780729/files/D3.1%20Best%20practices%20and%20guidelines%20for%20metadata%20mapping,%20linking,%20and%20integration.pdf#page=17
+  title: Q5
+  description: ''
+- name: Q6
+  namespace: d3.1
+  domain: kgi.services.base4nfdi.de
+  query_id: q6--d3.1@kgi.services.base4nfdi.de
+  sparql: |-
+    # List all distinct properties in the graph
+    SELECT DISTINCT ?property
+    WHERE {
+      ?subject ?property ?object.
+    }
+  url: https://zenodo.org/records/15780729/files/D3.1%20Best%20practices%20and%20guidelines%20for%20metadata%20mapping,%20linking,%20and%20integration.pdf#page=18
+  title: Q6
+  description: ''
+- name: Q7 1
+  namespace: d3.1
+  domain: kgi.services.base4nfdi.de
+  query_id: q7-1--d3.1@kgi.services.base4nfdi.de
+  sparql: |-
+    # Counting the occurrences of distinct types in the graph
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    SELECT DISTINCT ?type (COUNT(*) as ?occurrence)
+    WHERE {
+      ?subject rdf:type ?type.
+    }
+  url: https://zenodo.org/records/15780729/files/D3.1%20Best%20practices%20and%20guidelines%20for%20metadata%20mapping,%20linking,%20and%20integration.pdf#page=19
+  title: Q7 1
+  description: ''
+- name: Q7 2
+  namespace: d3.1
+  domain: kgi.services.base4nfdi.de
+  query_id: q7-2--d3.1@kgi.services.base4nfdi.de
+  sparql: |-
+    # Counting the occurrence of distinct types in the graph
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    SELECT DISTINCT ?type (COUNT(*) as ?occurrence)
+    WHERE {
+      ?subject rdf:type ?type
+    }
+    GROUP BY ?type
+    ORDER BY DESC(?occurrence)
+  url: https://zenodo.org/records/15780729/files/D3.1%20Best%20practices%20and%20guidelines%20for%20metadata%20mapping,%20linking,%20and%20integration.pdf#page=19
+  title: Q7 2
+  description: ''
+- name: Q8
+  namespace: d3.1
+  domain: kgi.services.base4nfdi.de
+  query_id: q8--d3.1@kgi.services.base4nfdi.de
+  sparql: |-
+    # Counting the occurrence of distinct properties in the graph
+    SELECT DISTINCT ?property (COUNT(*) as ?occurrence)
+    WHERE {
+      ?subject ?property ?object
+    }
+    GROUP BY ?property
+    ORDER BY DESC(?occurrence)
+  url: https://zenodo.org/records/15780729/files/D3.1%20Best%20practices%20and%20guidelines%20for%20metadata%20mapping,%20linking,%20and%20integration.pdf#page=20
+  title: Q8
+  description: ''
+- name: Q9
+  namespace: d3.1
+  domain: kgi.services.base4nfdi.de
+  query_id: q9--d3.1@kgi.services.base4nfdi.de
+  sparql: |-
+    # Extracts and returns a unique list of base IRIs
+    SELECT DISTINCT (IRI(?hosting_website) AS ?base_IRI)
+    WHERE {
+      ?subject ?type ?object.
+      BIND(REPLACE(str(?type), "(.*)(/|#)[^/#]*$", "$1") AS ?hosting_website)
+    }
+    LIMIT 10
+  url: https://zenodo.org/records/15780729/files/D3.1%20Best%20practices%20and%20guidelines%20for%20metadata%20mapping,%20linking,%20and%20integration.pdf#page=21
+  title: Q9
+  description: ''
+- name: Q10
+  namespace: d3.1
+  domain: kgi.services.base4nfdi.de
+  query_id: q10--d3.1@kgi.services.base4nfdi.de
+  sparql: |-
+    # List subject, object and predicate without the base URI.
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    SELECT DISTINCT ?subject_name ?property_name ?object_name
+    WHERE {
+      {
+        ?subject ?type_URI_predicate ?object.
+        ?subject rdf:type ?type_URI_subject.
+        ?object rdf:type ?type_URI_object.
+      }
+      BIND(REPLACE(str(?type_URI_subject), "(.*)(/|\\#)([^/#]*$)", "$3") AS
+    ?subject_name)
+      BIND(REPLACE(str(?type_URI_object), "(.*)(/|\\#)([^/#]*$)", "$3") AS
+    ?object_name)
+      BIND(REPLACE(str(?type_URI_predicate), "(.*)(/|\\#)([^/#]*$)", "$3") AS
+    ?property_name)
+    }
+    LIMIT 10
+  url: https://zenodo.org/records/15780729/files/D3.1%20Best%20practices%20and%20guidelines%20for%20metadata%20mapping,%20linking,%20and%20integration.pdf#page=22
+  title: Q10
+  description: ''
+- name: Q11
+  namespace: d3.1
+  domain: kgi.services.base4nfdi.de
+  query_id: q11--d3.1@kgi.services.base4nfdi.de
+  sparql: |-
+    # List properties and types with example instances from the graph
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    SELECT DISTINCT ?type (SAMPLE(?example_) AS ?example)
+    WHERE {
+      {
+        ?example_ rdf:type ?type.
+      } UNION {
+        ?subject ?type ?object.
+      }
+    }
+    GROUP BY ?type
+    LIMIT 5
+  url: https://zenodo.org/records/15780729/files/D3.1%20Best%20practices%20and%20guidelines%20for%20metadata%20mapping,%20linking,%20and%20integration.pdf#page=23
+  title: Q11
+  description: ''
+- name: Q12
+  namespace: d3.1
+  domain: kgi.services.base4nfdi.de
+  query_id: q12--d3.1@kgi.services.base4nfdi.de
+  sparql: |-
+    # Retrieving the non-literal entities with the highest number of occurrence
+    SELECT ?entity (COUNT(*) AS ?number_of_occurrence)
+    WHERE {
+      {
+        { ?entity ?predicate ?object }
+        UNION
+        { ?subject ?predicate ?entity }
+        UNION
+        { ?subject ?entity ?object }
+      }
+      FILTER(!isLiteral(?entity))
+    }
+    GROUP BY ?entity
+    ORDER BY DESC(?number_of_occurrence)
+    LIMIT 10
+  url: https://zenodo.org/records/15780729/files/D3.1%20Best%20practices%20and%20guidelines%20for%20metadata%20mapping,%20linking,%20and%20integration.pdf#page=24
+  title: Q12
+  description: ''
+- name: Q13
+  namespace: d3.1
+  domain: kgi.services.base4nfdi.de
+  query_id: q13--d3.1@kgi.services.base4nfdi.de
+  sparql: |-
+    # Retrieving the non-literal entities with the lowest number of occurrence
+    SELECT ?entity (COUNT(*) AS ?number_of_occurrence)
+    WHERE {
+      {
+        { ?entity ?predicate ?object }
+        UNION
+        { ?subject ?predicate ?entity }
+        UNION
+        { ?subject ?entity ?object }
+      }
+      FILTER(!isLiteral(?entity))
+    }
+    GROUP BY ?entity
+    ORDER BY ASC(?number_of_occurrence)
+    LIMIT 10
+  url: https://zenodo.org/records/15780729/files/D3.1%20Best%20practices%20and%20guidelines%20for%20metadata%20mapping,%20linking,%20and%20integration.pdf#page=25
+  title: Q13
+  description: ''
+- name: Q14
+  namespace: d3.1
+  domain: kgi.services.base4nfdi.de
+  query_id: q14--d3.1@kgi.services.base4nfdi.de
+  sparql: |-
+    # Lists the languages covered by KG and the total number of literal instances for each language.
+    SELECT DISTINCT ?language (COUNT(*) AS ?number)
+    WHERE {
+      ?subject ?predicate ?literal .
+      BIND(LANG(?literal) AS ?language)
+      FILTER(isLiteral(?literal))
+      FILTER(LANG(?literal) != "") # Only include literals with a non-empty language tag
+    }
+    GROUP BY ?language # Group by the alias ?language assigned in the SELECT clause
+  url: https://zenodo.org/records/15780729/files/D3.1%20Best%20practices%20and%20guidelines%20for%20metadata%20mapping,%20linking,%20and%20integration.pdf#page=26
+  title: Q14
+  description: ''
+- name: Q15
+  namespace: d3.1
+  domain: kgi.services.base4nfdi.de
+  query_id: q15--d3.1@kgi.services.base4nfdi.de
+  sparql: |-
+    # Lists all triples containing owl:SameAs or schema:sameAs property.
+    PREFIX owl: <http://www.w3.org/2002/07/owl#>
+    PREFIX schema: <http://schema.org/>
+    SELECT ?subject ?predicate ?object
+    WHERE {
+      {
+        ?subject owl:sameAs ?object .
+        BIND(owl:sameAs AS ?predicate)
+      }
+    }
+  url: https://zenodo.org/records/15780729/files/D3.1%20Best%20practices%20and%20guidelines%20for%20metadata%20mapping,%20linking,%20and%20integration.pdf#page=27
+  title: Q15
+  description: ''
+- name: Q16a
+  namespace: d3.1
+  domain: kgi.services.base4nfdi.de
+  query_id: q16a--d3.1@kgi.services.base4nfdi.de
+  sparql: |-
+    # Check if a KG contains DOIs and lists the unique DOIs along with their types, property and object.
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    SELECT DISTINCT ?type ?predicate ?pid_type ?object
+    WHERE {
+      ?subject rdf:type ?type .
+      ?subject ?predicate ?object .
+      FILTER (isLiteral(?object))
+      BIND(IF(REGEX(?object, "^(DOI:\\s*)?10\\.\\d{4,9}/[-._;()/:A-Z0-9]+$", "i"),
+    "DOI","Other") AS ?pid_type)
+      FILTER (?pid_type = "DOI")  # Ensures only objects with identified PID types are returned
+    }
+    LIMIT 10
+  url: https://zenodo.org/records/15780729/files/D3.1%20Best%20practices%20and%20guidelines%20for%20metadata%20mapping,%20linking,%20and%20integration.pdf#page=28
+  title: Q16a
+  description: ''
+- name: Q16b
+  namespace: d3.1
+  domain: kgi.services.base4nfdi.de
+  query_id: q16b--d3.1@kgi.services.base4nfdi.de
+  sparql: |-
+    # Check if a KG contains ORCID identifiers and lists the unique ORCID along with thier types, property and object.
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    SELECT DISTINCT ?type ?predicate ?object ?pid_type
+    WHERE {
+      ?subject rdf:type ?type .
+      ?subject ?predicate ?object .
+      FILTER (isLiteral(?object))
+      BIND(IF(REGEX(?object, "^https://orcid\\.org/\\d{4}-\\d{4}-\\d{4}-\\d{4}$",
+    "i"),"ORCID", "Other" ) AS ?pid_type)
+      FILTER (?pid_type = "ORCID") # Ensures only objects with identified PID types are returned
+    }
+    LIMIT 10
+  url: https://zenodo.org/records/15780729/files/D3.1%20Best%20practices%20and%20guidelines%20for%20metadata%20mapping,%20linking,%20and%20integration.pdf#page=29
+  title: Q16b
+  description: ''
+- name: Q16c
+  namespace: d3.1
+  domain: kgi.services.base4nfdi.de
+  query_id: q16c--d3.1@kgi.services.base4nfdi.de
+  sparql: |-
+    # Check if a KG contains Handles and lists the unique Handles along with their types, property and object.
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    SELECT DISTINCT ?subject ?predicate ?object
+    WHERE {
+      {
+        ?subject ?predicate ?object .
+        FILTER (
+          isLiteral(?object) &&
+          REGEX(str(?object), "^hdl:[0-9]+/[0-9A-Za-z]+")
+        )
+      }
+      UNION
+      {
+        ?subject ?predicate ?object .
+        FILTER (
+          isURI(?object) &&
+          REGEX(str(?object), "^http://hdl.handle.net/[0-9]+/[0-9A-Za-z]+")
+        )
+      }
+    }
+    LIMIT 10
+  url: https://zenodo.org/records/15780729/files/D3.1%20Best%20practices%20and%20guidelines%20for%20metadata%20mapping,%20linking,%20and%20integration.pdf#page=30
+  title: Q16c
+  description: ''
+- name: Q16d
+  namespace: d3.1
+  domain: kgi.services.base4nfdi.de
+  query_id: q16d--d3.1@kgi.services.base4nfdi.de
+  sparql: |-
+    # Check if a KG contains ISBN identifiers and list the unique ISBNs types, predicates and objects.
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    SELECT DISTINCT ?subject ?predicate ?object
+    WHERE {
+      ?subject ?predicate ?object .
+        FILTER (
+        isLiteral(?object) &&
+        REGEX(str(?object), "^(?=(?:\\D*\\d){10}(?:(?:\\D*\\d){3})?$)[\\d-]+$")
+      )
+    }
+    LIMIT 10
+  url: https://zenodo.org/records/15780729/files/D3.1%20Best%20practices%20and%20guidelines%20for%20metadata%20mapping,%20linking,%20and%20integration.pdf#page=31
+  title: Q16d
+  description: ''

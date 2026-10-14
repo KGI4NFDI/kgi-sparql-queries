@@ -57,6 +57,9 @@ def harvest() -> int:
     """
     exit_code = 0
     for source in load_sources():
+        if source.get("format") == "pinned":
+            print(f"{source['id']} {source['name']}: pinned, query set kept")
+            continue
         query_set = harvest_source(source)
         if len(query_set) == 0:
             print(f"{source['id']} {source['name']}: no queries found, nothing written")

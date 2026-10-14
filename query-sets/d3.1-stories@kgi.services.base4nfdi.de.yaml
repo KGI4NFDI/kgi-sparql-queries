@@ -1,0 +1,185 @@
+domain: kgi.services.base4nfdi.de
+namespace: d3.1-stories
+target_graph_name: various
+queries:
+- name: Listing 1.1
+  namespace: d3.1-stories
+  domain: kgi.services.base4nfdi.de
+  query_id: listing-1-1--d3.1-stories@kgi.services.base4nfdi.de
+  sparql: |-
+    # The number of entities represented of type “bioinformatics” in Wikidata
+    SELECT (COUNT(?res) AS ?total_instances)
+    WHERE {
+      ?res wdt:P31 wd:Q128570 .
+    }
+  url: https://zenodo.org/records/15780729/files/D3.1%20Best%20practices%20and%20guidelines%20for%20metadata%20mapping,%20linking,%20and%20integration.pdf#page=32
+  title: Listing 1.1
+  description: ''
+- name: Listing 1.2
+  namespace: d3.1-stories
+  domain: kgi.services.base4nfdi.de
+  query_id: listing-1-2--d3.1-stories@kgi.services.base4nfdi.de
+  sparql: |-
+    # List the properties associated with the entity type “bioinformatics”
+    SELECT DISTINCT ?properties
+    WHERE {
+      ?res wdt:P31 wd:Q128570 ;
+           ?properties ?objects .
+    }
+  url: https://zenodo.org/records/15780729/files/D3.1%20Best%20practices%20and%20guidelines%20for%20metadata%20mapping,%20linking,%20and%20integration.pdf#page=32
+  title: Listing 1.2
+  description: ''
+- name: Listing 1.3
+  namespace: d3.1-stories
+  domain: kgi.services.base4nfdi.de
+  query_id: listing-1-3--d3.1-stories@kgi.services.base4nfdi.de
+  sparql: |-
+    # List the entities typed with “biology”, including their labels
+    SELECT (COUNT(?item) As ?items)
+    WHERE {
+      ?item wdt:P31 wd:Q420 ;
+            rdfs:label ?itemLabel .
+    }
+  url: https://zenodo.org/records/15780729/files/D3.1%20Best%20practices%20and%20guidelines%20for%20metadata%20mapping,%20linking,%20and%20integration.pdf#page=33
+  title: Listing 1.3
+  description: ''
+- name: Listing 1.4
+  namespace: d3.1-stories
+  domain: kgi.services.base4nfdi.de
+  query_id: listing-1-4--d3.1-stories@kgi.services.base4nfdi.de
+  sparql: |-
+    # List the properties associated with the entities of this type
+    SELECT DISTINCT ?p
+    WHERE {
+      ?item wdt:P31 wd:Q420 ;
+            ?p ?o.
+    }
+  url: https://zenodo.org/records/15780729/files/D3.1%20Best%20practices%20and%20guidelines%20for%20metadata%20mapping,%20linking,%20and%20integration.pdf#page=33
+  title: Listing 1.4
+  description: ''
+- name: Listing 1.5
+  namespace: d3.1-stories
+  domain: kgi.services.base4nfdi.de
+  query_id: listing-1-5--d3.1-stories@kgi.services.base4nfdi.de
+  sparql: |-
+    # Dataset entities and their labels
+    SELECT DISTINCT ?item ?itemLabel
+    WHERE {
+      SERVICE wikibase:label { bd:serviceParam wikibase:language
+    "[AUTO_LANGUAGE],mul,en". }
+      {
+        SELECT DISTINCT ?item WHERE {
+          ?item p:P31 ?statement0.
+          ?statement0 (ps:P31/(wdt:P279*)) wd:Q1172284.
+          ?item p:P921 ?statement1.
+          ?statement1 (ps:P921/(wdt:P279*)) wd:Q420.
+        }
+        LIMIT 100
+      }
+    }
+  url: https://zenodo.org/records/15780729/files/D3.1%20Best%20practices%20and%20guidelines%20for%20metadata%20mapping,%20linking,%20and%20integration.pdf#page=33
+  title: Listing 1.5
+  description: ''
+- name: Listing 1.6
+  namespace: d3.1-stories
+  domain: kgi.services.base4nfdi.de
+  query_id: listing-1-6--d3.1-stories@kgi.services.base4nfdi.de
+  sparql: |-
+    # Career statements whose English label includes the string “math”
+    SELECT DISTINCT ?career ?careerstring
+    WHERE {
+      ?FactGrid_mathematician wdt:P165 ?career.
+      ?career rdfs:label ?careerstring .
+      FILTER (LANG(?careerstring) = "en" )
+      FILTER (REGEX(LCASE(STR(?careerstring)), "math"))
+      FILTER (?career != wd:Q448328 )
+    }
+  url: https://zenodo.org/records/15780729/files/D3.1%20Best%20practices%20and%20guidelines%20for%20metadata%20mapping,%20linking,%20and%20integration.pdf#page=35
+  title: Listing 1.6
+  description: ''
+- name: Listing 1.7
+  namespace: d3.1-stories
+  domain: kgi.services.base4nfdi.de
+  query_id: listing-1-7--d3.1-stories@kgi.services.base4nfdi.de
+  sparql: |-
+    # Map of street addresses of mathematicians in Paris
+    #defaultView:Map
+    SELECT DISTINCT ?FactGrid_mathematician ?FactGrid_mathematicianLabel
+    ?FactGrid_addressLabel ?FactGrid_coord
+    WHERE {
+      ?FactGrid_mathematician wdt:P165 ?career.
+      ?career rdfs:label ?careerstring.
+      FILTER((LANG(?careerstring)) = "en")
+      FILTER(REGEX(LCASE(?careerstring), "math"))
+      FILTER(?career != wd:Q448328)
+      ?FactGrid_mathematician wdt:P38 ?date_of_death;
+                              wdt:P208 ?FactGrid_address.
+      ?FactGrid_address wdt:P48 ?FactGrid_coord;
+                        wdt:P47 wd:Q10441.
+      SERVICE wikibase:label { bd:serviceParam wikibase:language
+    "[AUTO_LANGUAGE],en". }
+    }
+  url: https://zenodo.org/records/15780729/files/D3.1%20Best%20practices%20and%20guidelines%20for%20metadata%20mapping,%20linking,%20and%20integration.pdf#page=35
+  title: Listing 1.7
+  description: ''
+- name: Listing 1.8
+  namespace: d3.1-stories
+  domain: kgi.services.base4nfdi.de
+  query_id: listing-1-8--d3.1-stories@kgi.services.base4nfdi.de
+  sparql: |-
+    # People in MaRDI with known FactGrid ID
+    SELECT DISTINCT ?MaRDI_person ?MaRDI_personLabel
+    WHERE {
+      ?MaRDI_person wdt:P31 wd:Q57162;
+                    wdt:P316 ?FactGrid_personID.
+      SERVICE wikibase:label { bd:serviceParam wikibase:language
+    "[AUTO_LANGUAGE],en". }
+    }
+  url: https://zenodo.org/records/15780729/files/D3.1%20Best%20practices%20and%20guidelines%20for%20metadata%20mapping,%20linking,%20and%20integration.pdf#page=36
+  title: Listing 1.8
+  description: ''
+- name: Listing 1.9
+  namespace: d3.1-stories
+  domain: kgi.services.base4nfdi.de
+  query_id: listing-1-9--d3.1-stories@kgi.services.base4nfdi.de
+  sparql: |-
+    # title: Street addresses of historic mathematicians in Paris
+    # This query combines data from
+    # https://query.portal.mardi4nfdi.de (MaRDI)
+    # and https://database.factgrid.de/ (NFDI4Memory)
+    #defaultView:Map{"hide":["?FactGrid_coord"]}
+    PREFIX FactGrid_wd: <https://database.factgrid.de/entity/>
+    PREFIX FactGrid_wdt: <https://database.factgrid.de/prop/direct/>
+    SELECT DISTINCT
+      ?FactGrid_mathematician ?FactGrid_mathematicianLabel ?FactGrid_addressLabel
+    ?FactGrid_coord
+      ?MaRDI_person ?MaRDI_personLabel WHERE {
+      ?MaRDI_person wdt:P316 ?FactGrid_personID .
+      BIND(URI(CONCAT("https://database.factgrid.de/entity/", ?FactGrid_personID))
+    AS ?FactGrid_mathematician)
+      SERVICE <https://database.factgrid.de/sparql> {
+        SELECT DISTINCT
+         ?FactGrid_mathematician ?FactGrid_mathematicianLabel ?FactGrid_addressLabel
+    ?FactGrid_coord
+         WHERE
+           {
+             ?FactGrid_mathematician FactGrid_wdt:P165 ?career.
+             ?career rdfs:label ?careerstring .
+             FILTER (LANG(?careerstring) = "en" )
+             FILTER (REGEX(LCASE(?careerstring), "math"))
+             FILTER(?career != FactGrid_wd:Q448328)
+             ?FactGrid_mathematician FactGrid_wdt:P38 ?date_of_death;
+                                     FactGrid_wdt:P208 ?FactGrid_address.
+             ?FactGrid_address FactGrid_wdt:P48 ?FactGrid_coord;
+                               FactGrid_wdt:P47 FactGrid_wd:Q10441 .
+             SERVICE wikibase:label { bd:serviceParam wikibase:language
+    "[AUTO_LANGUAGE],en". }
+        }
+        LIMIT 100
+      }
+      BIND(?FactGrid_mathematicianLabel AS ?mathematicianLabel)
+      BIND(STR(CONCAT("MaRDI: ", STR(?mathematicianLabel))) AS ?MaRDI_personLabel)
+    }
+  url: https://zenodo.org/records/15780729/files/D3.1%20Best%20practices%20and%20guidelines%20for%20metadata%20mapping,%20linking,%20and%20integration.pdf#page=37
+  title: Listing 1.9
+  description: ''
