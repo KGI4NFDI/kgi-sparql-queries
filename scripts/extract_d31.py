@@ -19,6 +19,10 @@ query crossing a page break stays whole. 12 are still cut wrong.
 
 Rule 3: a caption "Listing 1.n." also ends a query and names the query above it.
 7 are still cut wrong.
+
+Rule 4: a line of plain words after a line with a comment continues that comment,
+which the PDF wrapped. 2 are still wrong: Q15, whose PREFIX IRIs lack angle
+brackets in D3.1 itself, and Listing 1.9, which is complete.
 """
 
 import re
@@ -39,6 +43,7 @@ USER_AGENT = "kgi-sparql-queries (https://github.com/KGI4NFDI/kgi-sparql-queries
 DOMAIN = "kgi.services.base4nfdi.de"
 
 START = re.compile(r"^\s*(#|PREFIX\b|SELECT\b)")
+WRAPPED = re.compile(r"^\s*[a-z][a-z ,]*[.,]?\s*$")
 CAPTION = re.compile(r"^\s*(Listing \d+\.\d+)\.")
 HEADING = re.compile(r"^(Q\d+[a-d]?|Story \d)\.? ")
 QUERY_FORM = re.compile(r"\b(SELECT|ASK|CONSTRUCT|DESCRIBE)\b")
@@ -110,7 +115,10 @@ def find_queries(lines: List[tuple]) -> List[Dict]:
         if caption:
             block["name"] = caption.group(1)
         elif line.strip():
-            block["lines"].append(line)
+            if "#" in block["lines"][-1] and WRAPPED.match(line):
+                block["lines"][-1] = block["lines"][-1].rstrip() + " " + line.strip()
+            else:
+                block["lines"].append(line)
             continue
         blocks.append(block)
         block = None
