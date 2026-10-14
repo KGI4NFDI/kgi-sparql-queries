@@ -23,6 +23,9 @@ Rule 3: a caption "Listing 1.n." also ends a query and names the query above it.
 Rule 4: a line of plain words after a line with a comment continues that comment,
 which the PDF wrapped. 2 are still wrong: Q15, whose PREFIX IRIs lack angle
 brackets in D3.1 itself, and Listing 1.9, which is complete.
+
+Correction: a PREFIX IRI without angle brackets gets them. This changes Q15 as
+published in D3.1.
 """
 
 import re
@@ -46,6 +49,7 @@ START = re.compile(r"^\s*(#|PREFIX\b|SELECT\b)")
 WRAPPED = re.compile(r"^\s*[a-z][a-z ,]*[.,]?\s*$")
 CAPTION = re.compile(r"^\s*(Listing \d+\.\d+)\.")
 HEADING = re.compile(r"^(Q\d+[a-d]?|Story \d)\.? ")
+BARE_PREFIX = re.compile(r"^(\s*PREFIX\s+[\w-]*:\s*)(https?://\S+)$", re.MULTILINE)
 QUERY_FORM = re.compile(r"\b(SELECT|ASK|CONSTRUCT|DESCRIBE)\b")
 
 
@@ -149,6 +153,7 @@ def to_query_sets(queries: List[Dict]) -> List[NamedQuerySet]:
             name = f"{name} {seen[name]}"
         query_set = stories if query["heading"].startswith("Story") else registry
         sparql = "\n".join(line.rstrip() for line in query["lines"]).strip()
+        sparql = BARE_PREFIX.sub(r"\1<\2>", sparql)
         named_query = NamedQuery(
             domain=DOMAIN,
             namespace=query_set.namespace,
