@@ -1,6 +1,7 @@
 import unittest
 
 import yaml
+from snapquery.sparql_analyzer import SparqlAnalyzer
 
 from kgi_example_queries.harvest import harvest_source, load_sources
 
@@ -49,3 +50,23 @@ class TestHarvest(unittest.TestCase):
             with open(path, encoding="utf-8") as yaml_file:
                 query_set = yaml.safe_load(yaml_file)
             self.assertEqual(expected[source["namespace"]], len(query_set["queries"]), path)
+
+    def test_pinned_queries_are_valid(self):
+        """
+        test that every query of the pinned D3.1 sources is valid SPARQL,
+        after adding the prefixes it uses without declaring them
+        """
+        # valid, but a SERVICE inside a SERVICE breaks rdflib's parser:
+        # RDFLib/rdflib#2136, fixed by RDFLib/rdflib#3408, not released yet
+        known_failures = {"listing-1-9--d3.1-stories@kgi.services.base4nfdi.de"}
+        for source in load_sources():
+            if source.get("format") != "pinned":
+                continue
+            path = f"query-sets/{source['namespace']}@{source['domain']}.yaml"
+            with open(path, encoding="utf-8") as yaml_file:
+                query_set = yaml.safe_load(yaml_file)
+            for query in query_set["queries"]:
+                if query["query_id"] in known_failures:
+                    continue
+                sparql = SparqlAnalyzer.add_missing_prefixes(query["sparql"])
+                self.assertTrue(SparqlAnalyzer.is_valid(sparql), query["query_id"])
