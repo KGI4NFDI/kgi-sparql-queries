@@ -19,6 +19,8 @@ classifiers = [
 dependencies = [
   "snapquery>=0.2.5",
   "PyYAML>=6",
+  "beautifulsoup4>=4.12",
+  "requests>=2.31",
 ]
 
 [project.scripts]
