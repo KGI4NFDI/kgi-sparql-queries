@@ -1,0 +1,180 @@
+domain: data.gesis.org
+namespace: somesci
+target_graph_name: somesci
+queries:
+- name: SPARQL endpoint 1
+  namespace: somesci
+  domain: data.gesis.org
+  query_id: sparql-endpoint-1--somesci@data.gesis.org
+  sparql: |-
+    PREFIX dcterms: <http://purl.org/dc/terms/>
+
+    SELECT  ?p ?o ?p2 ?o2
+    WHERE{
+        <http://data.gesis.org/somesci/> ?p ?o .
+        OPTIONAL{
+            ?s dcterms:creator ?o .
+            ?o ?p2 ?o2
+        }
+    }
+    ORDER BY ?p ?o ?p2 ?o2
+  url: https://data.gesis.org/somesci
+  title: SPARQL endpoint 1
+  description: ''
+- name: SPARQL endpoint 2
+  namespace: somesci
+  domain: data.gesis.org
+  query_id: sparql-endpoint-2--somesci@data.gesis.org
+  sparql: |-
+    PREFIX nif: <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#>
+    PREFIX void: <http://rdfs.org/ns/void#>
+    PREFIX dcterms: <http://purl.org/dc/terms/>
+    PREFIX schema: <http://schema.org/>
+
+    SELECT ?datasetName (COUNT(?document) AS ?no_documents )
+    WHERE{
+        ?document a nif:Context .
+        ?document schema:isPartOf ?dataset .
+        ?dataset dcterms:title ?datasetName .
+    }
+    GROUP BY ?datasetName
+    ORDER BY ?datasetName
+  url: https://data.gesis.org/somesci
+  title: SPARQL endpoint 2
+  description: ''
+- name: SPARQL endpoint 3
+  namespace: somesci
+  domain: data.gesis.org
+  query_id: sparql-endpoint-3--somesci@data.gesis.org
+  sparql: |-
+    PREFIX nif: <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#>
+    PREFIX sms: <http://data.gesis.org/somesci/>
+    PREFIX its: <http://www.w3.org/2005/11/its/rdf#>
+
+    SELECT ?sw_identity (COUNT(?sw_identity) AS ?no_mentions)
+    WHERE{
+        ?sw_phrase a nif:Phrase .
+        ?sw_phrase its:taClassRef [rdfs:subClassOf sms:Software] .
+        ?sw_phrase its:taIdentRef ?sw_identity .
+    }
+    ORDER BY DESC (?no_mentions) ?sw_identity
+    LIMIT 10
+  url: https://data.gesis.org/somesci
+  title: SPARQL endpoint 3
+  description: ''
+- name: SPARQL endpoint 4
+  namespace: somesci
+  domain: data.gesis.org
+  query_id: sparql-endpoint-4--somesci@data.gesis.org
+  sparql: |-
+    PREFIX nif: <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#>
+    PREFIX sms: <http://data.gesis.org/somesci/>
+    PREFIX its: <http://www.w3.org/2005/11/its/rdf#>
+
+    SELECT ?sw_identity (COUNT(DISTINCT ?spelling) AS ?no_spellings) (GROUP_CONCAT(DISTINCT ?spelling; SEPARATOR=", ") AS ?spelling_variations) (GROUP_CONCAT(DISTINCT ?alt_name; SEPARATOR=", ") AS ?alternative_names)
+    WHERE{
+        ?sw_phrase a nif:Phrase .
+        ?sw_phrase its:taClassRef [ rdfs:subClassOf sms:Software ] .
+        ?sw_phrase its:taIdentRef ?sw_identity .
+        ?sw_phrase nif:anchorOf ?spelling .
+        OPTIONAL{
+            ?sw_phrase sms:referredToBy ?alt_name_mention .
+            ?alt_name_mention its:taClassRef [ rdfs:subClassOf sms:Software ] .
+            ?alt_name_mention nif:anchorOf ?alt_name.
+        }
+    }
+    GROUP BY ?sw_identity
+    ORDER BY DESC(?no_spellings) ?sw_identity
+  url: https://data.gesis.org/somesci
+  title: SPARQL endpoint 4
+  description: ''
+- name: SPARQL endpoint 5
+  namespace: somesci
+  domain: data.gesis.org
+  query_id: sparql-endpoint-5--somesci@data.gesis.org
+  sparql: |-
+    PREFIX nif: <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#>
+    PREFIX sms: <http://data.gesis.org/somesci/>
+    PREFIX its: <http://www.w3.org/2005/11/its/rdf#>
+
+    SELECT ?sw_type (COUNT(?sw_type) AS ?total) (COUNT(?version_phrase) AS ?no_versions) (COUNT(?url_phrase) AS ?no_urls) (COUNT(?citation_phrase) AS ?no_citations) (COUNT(?release_phrase) AS ?no_releases)
+    WHERE{
+        ?sw_phrase its:taClassRef ?sw_type .
+        OPTIONAL{
+            ?sw_phrase sms:referredToByVersion ?version_phrase .
+            ?version_phrase its:taClassRef sms:Version
+        }
+        OPTIONAL{
+            ?sw_phrase sms:referredToByURL ?url_phrase .
+            ?url_phrase its:taClassRef sms:URL
+        }
+        OPTIONAL{
+            ?sw_phrase sms:referredToByCitation ?citation_phrase.
+            ?citation_phrase its:taClassRef sms:Citation
+        }
+        OPTIONAL{
+            ?sw_phrase sms:referredToByRelease ?release_phrase .
+            ?release_phrase its:taClassRef sms:Release
+        }
+        VALUES ?sw_type {sms:ProgrammingEnvironment sms:Application sms:OperatingSystem sms:PlugIn }
+    }
+    GROUP BY ?sw_type
+    ORDER BY ?sw_type
+  url: https://data.gesis.org/somesci
+  title: SPARQL endpoint 5
+  description: ''
+- name: SPARQL endpoint 6
+  namespace: somesci
+  domain: data.gesis.org
+  query_id: sparql-endpoint-6--somesci@data.gesis.org
+  sparql: |-
+    PREFIX nif: <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#>
+    PREFIX sms: <http://data.gesis.org/somesci/>
+    PREFIX its: <http://www.w3.org/2005/11/its/rdf#>
+
+    SELECT (?ident_a AS ?sw) (GROUP_CONCAT(DISTINCT ?spelling_b; SEPARATOR=", " ) AS ?cooccurring_sw)
+    WHERE{
+        ?sw_phrase_a a nif:Phrase .
+        ?sw_phrase_a its:taClassRef [rdfs:subClassOf sms:Software] .
+        ?sw_phrase_a its:taIdentRef ?ident_a .
+        ?sw_phrase_a nif:referenceContext [nif:broaderContext ?common_broader_context] .
+        ?sw_phrase_a nif:anchorOf ?spelling_a .
+
+        ?sw_phrase_b a nif:Phrase .
+        ?sw_phrase_b its:taClassRef [rdfs:subClassOf sms:Software] .
+        ?sw_phrase_b its:taIdentRef ?ident_b .
+        ?sw_phrase_b nif:referenceContext [nif:broaderContext ?common_broader_context] .
+        ?sw_phrase_b nif:anchorOf ?spelling_b .
+
+        FILTER( STRLEN (?spelling_b) < 25 )
+        FILTER(?ident_a != ?ident_b)
+    }
+    GROUP BY ?ident_a
+    ORDER BY ?ident_a
+  url: https://data.gesis.org/somesci
+  title: SPARQL endpoint 6
+  description: ''
+- name: SPARQL endpoint 7
+  namespace: somesci
+  domain: data.gesis.org
+  query_id: sparql-endpoint-7--somesci@data.gesis.org
+  sparql: |-
+    PREFIX nif: <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#>
+    PREFIX its: <http://www.w3.org/2005/11/its/rdf#>
+
+    SELECT ?no_labels (COUNT(?sentence) AS ?no_sentences)
+    WHERE{
+        SELECT ?sentence (COUNT(?annotation_phrase) AS ?no_labels)
+        WHERE{
+            ?sentence a nif:Sentence .
+            OPTIONAL{
+                ?annotation_phrase nif:referenceContext ?sentence .
+            }
+        }
+        GROUP BY ?sentence
+    }
+    GROUP BY ?no_labels
+    ORDER BY ?no_labels
+  url: https://data.gesis.org/somesci
+  title: SPARQL endpoint 7
+  description: ''

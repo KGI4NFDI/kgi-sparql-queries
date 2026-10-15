@@ -1,0 +1,75 @@
+domain: data.gesis.org
+namespace: tweetscov19
+target_graph_name: tweetscov19
+queries:
+- name: Examples 1
+  namespace: tweetscov19
+  domain: data.gesis.org
+  query_id: examples-1--tweetscov19@data.gesis.org
+  sparql: |-
+    PREFIX schema: <http://schema.org/>
+    PREFIX nee: <http://www.ics.forth.gr/isl/oae/core#>
+    PREFIX dc: <http://purl.org/dc/terms/>
+    PREFIX dbr: <http://dbpedia.org/resource/>
+
+    SELECT ?otherEntity ( COUNT(?tweet) AS ?count )
+    WHERE {
+      ?tweet schema:mentions ?entity ;
+        dc:created ?date FILTER( year(?date) = 2020 and month(?date) = 4 ) .
+      ?entity a nee:Entity ;
+        nee:hasMatchedURI dbr:Donald_Trump .
+      ?tweet schema:mentions ?entity2 .
+      ?entity2 a nee:Entity ;
+        nee:hasMatchedURI ?otherEntity FILTER ( ?otherEntity != dbr:Donald_Trump )
+    }
+    GROUP BY ?otherEntity
+    ORDER BY DESC(?count)
+    LIMIT 5
+  url: https://data.gesis.org/tweetscov19/#Examples
+  title: Examples 1
+  description: ''
+- name: Examples 2
+  namespace: tweetscov19
+  domain: data.gesis.org
+  query_id: examples-2--tweetscov19@data.gesis.org
+  sparql: |-
+    PREFIX schema: <http://schema.org/>
+    PREFIX nee: <http://www.ics.forth.gr/isl/oae/core#>
+    PREFIX dc: <http://purl.org/dc/terms/>
+    PREFIX dbr: <http://dbpedia.org/resource/>
+
+    SELECT ( day(?date) AS ?day ) ( COUNT(?tweet) AS ?count )
+    WHERE {
+      ?tweet schema:mentions ?entity ;
+        dc:created ?date FILTER( year(?date) = 2020 and month(?date) = 4 ) .
+      ?entity a nee:Entity ;
+        nee:hasMatchedURI dbr:Hydroxychloroquine .
+    }
+    GROUP BY day(?date)
+    ORDER BY day(?date)
+  url: https://data.gesis.org/tweetscov19/#Examples
+  title: Examples 2
+  description: ''
+- name: Examples 3
+  namespace: tweetscov19
+  domain: data.gesis.org
+  query_id: examples-3--tweetscov19@data.gesis.org
+  sparql: |-
+    PREFIX nee: <http://www.ics.forth.gr/isl/oae/core#>
+    PREFIX schema: <http://schema.org/>
+    PREFIX dc: <http://purl.org/dc/terms/>
+    PREFIX dbr: <http://dbpedia.org/resource/>
+
+    SELECT ?url ( COUNT(?tweet) AS ?count )
+    WHERE {
+      ?tweet schema:mentions ?entity ;
+        dc:created ?date FILTER( year(?date)=2020 and month(?date)=4 and (day(?date)=6 || day(?date)=7) ) .
+      ?entity a nee:Entity ;
+        nee:hasMatchedURI dbr:Hydroxychloroquine .
+      ?tweet schema:citation ?url
+    }
+    GROUP BY ?url
+    ORDER BY DESC(?count)
+  url: https://data.gesis.org/tweetscov19/#Examples
+  title: Examples 3
+  description: ''
