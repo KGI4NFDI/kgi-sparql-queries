@@ -45,3 +45,24 @@ sources:
     domain: data.gesis.org
     graph: tweetskb
     url: https://data.gesis.org/tweetskb
+  - id: KGR51
+    name: Semantic Kompakkt
+    namespace: examples
+    domain: semantic-kompakkt.de
+    graph: semantic-kompakkt
+    format: wikitext
+    url: https://wikibase.semantic-kompakkt.de/wiki/Query/Examples
+  - id: KGR1
+    name: Aktienführer Knowledge Graph
+    namespace: examples
+    domain: akf.kgi.uni-mannheim.de
+    graph: akf
+    format: wikitext
+    url: https://akf.kgi.uni-mannheim.de/wiki/SPARQL_examples
+  - id: KGR31
+    name: MaschinenBauIndustrie KG
+    namespace: examples
+    domain: mbi.kgi.uni-mannheim.de
+    graph: mbi
+    format: wikitext
+    url: https://mbi.kgi.uni-mannheim.de/wiki/SPARQL_examples
