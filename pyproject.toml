@@ -19,6 +19,15 @@ classifiers = [
 dependencies = [
   "snapquery>=0.2.5",
   "PyYAML>=6",
+  "beautifulsoup4>=4.12",
+  "requests>=2.31",
+]
+
+[project.optional-dependencies]
+# only needed to rebuild the pinned sources of data/sources.yaml,
+# e.g. with scripts/extract_d31.py
+pinned = [
+  "pypdf>=4",
 ]
 
 [project.scripts]
