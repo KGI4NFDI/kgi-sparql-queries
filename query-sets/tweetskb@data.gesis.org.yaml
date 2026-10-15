@@ -1,0 +1,90 @@
+domain: data.gesis.org
+namespace: tweetskb
+target_graph_name: tweetskb
+queries:
+- name: Examples 1
+  namespace: tweetskb
+  domain: data.gesis.org
+  query_id: examples-1--tweetskb@data.gesis.org
+  sparql: |-
+    PREFIX nee: <http://www.ics.forth.gr/isl/oae/core#>
+    PREFIX schema: <http://schema.org/>
+    PREFIX dc: <http://purl.org/dc/terms/>
+    PREFIX dbr: <http://dbpedia.org/resource/>
+
+    SELECT (month(?date) AS ?month) (count(?tweet) AS ?numOfTweets) WHERE {
+      ?tweet schema:mentions ?entity ; dc:created ?date FILTER(year(?date) = 2015) .
+      ?entity a nee:Entity ; nee:hasMatchedURI dbr:Alexis_Tsipras .
+    } GROUP BY month(?date) ORDER BY ?month
+  url: https://data.gesis.org/tweetskb#Examples
+  title: Examples 1
+  description: ''
+- name: Examples 2
+  namespace: tweetskb
+  domain: data.gesis.org
+  query_id: examples-2--tweetskb@data.gesis.org
+  sparql: |-
+    PREFIX nee: <http://www.ics.forth.gr/isl/oae/core#>
+    PREFIX schema: <http://schema.org/>
+    PREFIX dc: <http://purl.org/dc/terms/>
+    PREFIX dbr: <http://dbpedia.org/resource/>
+    PREFIX dbo: <http://dbpedia.org/ontology/>
+
+    SELECT ?relatedEntity (count(distinct ?tweet) as ?num) WHERE {
+      ?tweet dc:created ?date FILTER(month(?date) >= 6 && month(?date) <= 8) .
+      ?tweet schema:mentions ?entity .
+      ?entity a nee:Entity ; nee:hasMatchedURI dbr:Barack_Obama .
+      ?tweet schema:mentions ?entity2.
+      ?entity2 nee:hasMatchedURI ?relatedEntity FILTER (?relatedEntity != dbr:Barack_Obama)
+    } GROUP BY ?relatedEntity ORDER BY DESC(?num) LIMIT 5
+  url: https://data.gesis.org/tweetskb#Examples
+  title: Examples 2
+  description: ''
+- name: Examples 3
+  namespace: tweetskb
+  domain: data.gesis.org
+  query_id: examples-3--tweetskb@data.gesis.org
+  sparql: |-
+    PREFIX nee: <http://www.ics.forth.gr/isl/oae/core#>
+    PREFIX schema: <http://schema.org/>
+    PREFIX dc: <http://purl.org/dc/terms/>
+    PREFIX dbr: <http://dbpedia.org/resource/>
+    PREFIX sioc: <http://rdfs.org/sioc/types#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+    SELECT ?hastagLabel (count(distinct ?tweet) as ?num) WHERE {
+      ?tweet dc:created ?date FILTER(year(?date) = 2016) .
+      ?tweet schema:mentions ?entity .
+      ?entity a nee:Entity ; nee:hasMatchedURI dbr:Refugee .
+      ?tweet schema:mentions ?hashtag.
+      ?hashtag a sioc:Tag ; rdfs:label ?hastagLabel
+    } GROUP BY ?hastagLabel ORDER BY DESC(?num) LIMIT 10
+  url: https://data.gesis.org/tweetskb#Examples
+  title: Examples 3
+  description: ''
+- name: Examples 4
+  namespace: tweetskb
+  domain: data.gesis.org
+  query_id: examples-4--tweetskb@data.gesis.org
+  sparql: |-
+    PREFIX nee: <http://www.ics.forth.gr/isl/oae/core#>
+    PREFIX schema: <http://schema.org/>
+    PREFIX dc: <http://purl.org/dc/terms/>
+    PREFIX dbr: <http://dbpedia.org/resource/>
+
+    SELECT ?otherEntity ( COUNT(?tweet) AS ?count )
+    WHERE {
+      ?tweet schema:mentions ?entity ;
+        dc:created ?date FILTER ( year(?date) = 2020 and month(?date) = 4 ) .
+      ?entity a nee:Entity ;
+        nee:hasMatchedURI dbr:Donald_Trump .
+      ?tweet schema:mentions ?entity2 .
+
+      ?entity2 a nee:Entity ;
+        nee:hasMatchedURI ?otherEntity FILTER ( ?otherEntity != dbr:Donald_Trump )
+    }
+    GROUP BY ?otherEntity
+    ORDER BY DESC( ?count )
+  url: https://data.gesis.org/tweetskb#Examples
+  title: Examples 4
+  description: ''

@@ -1,0 +1,94 @@
+domain: data.gesis.org
+namespace: claimskg
+target_graph_name: claimskg
+queries:
+- name: Example queries 1
+  namespace: claimskg
+  domain: data.gesis.org
+  query_id: example-queries-1--claimskg@data.gesis.org
+  sparql: "PREFIX itsrdf:<https://www.w3.org/2005/11/its/rdf#>\n\t\tPREFIX schema:<http://schema.org/>\n\
+    \t\tPREFIX dbr:<http://dbpedia.org/resource/>\n\t\tPREFIX dbo:<http://dbpedia.org/ontology/>\n\
+    \t\tPREFIX nee:<http://www.ics.forth.gr/isl/oae/core#>\n\t\tPREFIX dc:<http://purl.org/dc/terms/>\n\
+    \t\tSELECT ?entity2Uri count(?entity2) AS ?num WHERE {\n\t\t?claim a schema:CreativeWork\
+    \ ; schema:text ?text ; schema:mentions ?entity1, ?entity2 .\n\t\t?entity1 itsrdf:taIdentRef\
+    \ dbr:Coronavirus .\n\t\t?entity2 itsrdf:taIdentRef ?entity2Uri FILTER (?entity2Uri\
+    \ != dbr:Coronavirus)\n\t\t} GROUP BY ?entity2Uri ORDER BY DESC(?num) LIMIT 5"
+  url: https://data.gesis.org/claimskg#Example-queries
+  title: Example queries 1
+  description: ''
+- name: Example queries 2
+  namespace: claimskg
+  domain: data.gesis.org
+  query_id: example-queries-2--claimskg@data.gesis.org
+  sparql: "PREFIX itsrdf:<https://www.w3.org/2005/11/its/rdf#>\n\t\tPREFIX schema:<http://schema.org/>\n\
+    \t\tPREFIX dbr:<http://dbpedia.org/resource/>\n\t\tSELECT ?text ?date ?reviewurl\
+    \ WHERE {\n\t\t?claim a schema:CreativeWork ; schema:datePublished ?date FILTER(year(?date)=2022)\n\
+    \t\t?claim schema:author ?author ; schema:text ?text ; schema:mentions ?entity1,\
+    \ ?entity2 .\n\t\t?entity1 itsrdf:taIdentRef dbr:Vladimir_Putin .\n\t\t?entity2\
+    \ itsrdf:taIdentRef dbr:Ukraine .\n\t\t?claimReview schema:itemReviewed ?claim\
+    \ ;schema:url ?reviewurl }"
+  url: https://data.gesis.org/claimskg#Example-queries
+  title: Example queries 2
+  description: ''
+- name: Example queries 3
+  namespace: claimskg
+  domain: data.gesis.org
+  query_id: example-queries-3--claimskg@data.gesis.org
+  sparql: "PREFIX itsrdf: <https://www.w3.org/2005/11/its/rdf#>\n\t\tPREFIX schema:\
+    \ <http://schema.org/>\n\t\tPREFIX dbr: <http://dbpedia.org/resource/>\n\t\tPREFIX\
+    \ dbo: <http://dbpedia.org/ontology/>\n\t\tPREFIX nee: <http://www.ics.forth.gr/isl/oae/core#>\n\
+    \t\tPREFIX dc: <http://purl.org/dc/terms/>\n\t\tSELECT ?year (count(distinct ?text)\
+    \ as ?count){\n\t\t?claim a schema:CreativeWork ; schema:text ?text ; schema:datePublished\
+    \ ?date BIND (year(?date) AS ?year)FILTER (?year >= 2019) .\n\t\t?claim  schema:mentions\
+    \ ?entity .\n\t\t?entity itsrdf:taIdentRef dbr:Coronavirus.\n\t\t} ORDER BY desc(?count)"
+  url: https://data.gesis.org/claimskg#Example-queries
+  title: Example queries 3
+  description: ''
+- name: Example queries 4
+  namespace: claimskg
+  domain: data.gesis.org
+  query_id: example-queries-4--claimskg@data.gesis.org
+  sparql: "PREFIX itsrdf: <https://www.w3.org/2005/11/its/rdf#>\n\t\tPREFIX schema:\
+    \ <http://schema.org/>\n\t\tPREFIX dbr: <http://dbpedia.org/resource/>\n\t\tPREFIX\
+    \ dbo: <http://dbpedia.org/ontology/>\n\t\tPREFIX nee: <http://www.ics.forth.gr/isl/oae/core#>\n\
+    \t\tPREFIX dc: <http://purl.org/dc/terms/>\n\t\tSELECT month(?date) as ?month\
+    \ count(?claim) as ?num WHERE {\n\t\t?claim a schema:CreativeWork ; schema:datePublished\
+    \ ?date FILTER(year(?date)=2020)\n\t\t?claim schema:author ?author ; schema:text\
+    \ ?text ; schema:mentions ?entity .\n\t\t?entity itsrdf:taIdentRef dbr:Donald_Trump\
+    \ .\n\t\t} GROUP BY month(?date) ORDER BY month(?date)"
+  url: https://data.gesis.org/claimskg#Example-queries
+  title: Example queries 4
+  description: ''
+- name: Example queries 5
+  namespace: claimskg
+  domain: data.gesis.org
+  query_id: example-queries-5--claimskg@data.gesis.org
+  sparql: "PREFIX itsrdf: <https://www.w3.org/2005/11/its/rdf#>\n\t\tPREFIX schema:\
+    \ <http://schema.org/>\n\t\tPREFIX dbr: <http://dbpedia.org/resource/>\n\t\tPREFIX\
+    \ dbo: <http://dbpedia.org/ontology/>\n\t\tPREFIX nee: <http://www.ics.forth.gr/isl/oae/core#>\n\
+    \t\tPREFIX dc: <http://purl.org/dc/terms/>\n\t\tSELECT DISTINCT ?text ?reviewurl\
+    \ ?President WHERE {\n\n\t\tSERVICE <http://dbpedia.org/sparql>\n\t\t{\n\n\t\t\
+    \t?President <http://dbpedia.org/property/office> \"President of the United States\"\
+    @en .\n\n\n\t\t}\n\t\t?claim a schema:CreativeWork .\n\t\t?claimReview schema:itemReviewed\
+    \ ?claim ;schema:url ?reviewurl .\n\t\t?claim schema:author ?author ; schema:text\
+    \ ?text ; schema:mentions ?entity1 .\n\t\t?entity1 <https://www.w3.org/2005/11/its/rdf#taIdentRef>\
+    \ ?President.\n\n\t\t}"
+  url: https://data.gesis.org/claimskg#Example-queries
+  title: Example queries 5
+  description: ''
+- name: Example queries 6
+  namespace: claimskg
+  domain: data.gesis.org
+  query_id: example-queries-6--claimskg@data.gesis.org
+  sparql: "PREFIX itsrdf: <https://www.w3.org/2005/11/its/rdf#>\n\t\tPREFIX schema:\
+    \ <http://schema.org/>\n\t\tPREFIX dbr: <http://dbpedia.org/resource/>\n\t\tPREFIX\
+    \ dbo: <http://dbpedia.org/ontology/>\n\t\tPREFIX nee: <http://www.ics.forth.gr/isl/oae/core#>\n\
+    \t\tPREFIX dc: <http://purl.org/dc/terms/>\n\t\tSELECT DISTINCT ?text  ?reviewurl\
+    \ ?c WHERE {\n\n\t\tSERVICE <http://dbpedia.org/sparql>\n\t\t{\n\n\t\t\t?b <http://dbpedia.org/ontology/isPartOfMilitaryConflict>\
+    \ ?c .\n\n\n\t\t}\n\t\t?claim a schema:CreativeWork .\n\t\t?claimReview schema:itemReviewed\
+    \ ?claim ;schema:url ?reviewurl .\n\t\t?claim schema:author ?author ; schema:text\
+    \ ?text ; schema:mentions ?entity1 .\n\t\t?entity1 <https://www.w3.org/2005/11/its/rdf#taIdentRef>\
+    \ ?c.\n\n\t\t}"
+  url: https://data.gesis.org/claimskg#Example-queries
+  title: Example queries 6
+  description: ''
