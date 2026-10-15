@@ -1,5 +1,5 @@
 """
-Extract the example SPARQL queries of KGI4NFDI deliverable D3.1 into snapquery query sets
+Extract the example SPARQL queries of KGI4NFDI deliverable D3.1 into a snapquery query set
 
 D3.1 "Best practices and guidelines for metadata mapping, linking, and integration",
 version 1.0, https://doi.org/10.5281/zenodo.15780729, CC BY 4.0, is a PDF.
@@ -132,18 +132,18 @@ def find_queries(lines: List[tuple]) -> List[Dict]:
     return queries
 
 
-def to_query_sets(queries: List[Dict]) -> List[NamedQuerySet]:
+def to_query_set(queries: List[Dict]) -> NamedQuerySet:
     """
-    turn the query blocks into two snapquery query sets: Q1 to Q16d, and the stories
+    turn the query blocks into one snapquery query set: Q1 to Q16d, written for
+    any knowledge graph, and the stories, written for Wikidata, FactGrid and MaRDI
 
     Args:
         queries: the query blocks
 
     Returns:
-        the query sets
+        the query set
     """
-    registry = NamedQuerySet(domain=DOMAIN, namespace="d3.1", target_graph_name="kgi-registry")
-    stories = NamedQuerySet(domain=DOMAIN, namespace="d3.1-stories", target_graph_name="various")
+    query_set = NamedQuerySet(domain=DOMAIN, namespace="d3.1", target_graph_name="various")
     names = [query.get("name", query["heading"]) for query in queries]
     seen = {}
     for query, name in zip(queries, names):
@@ -151,7 +151,6 @@ def to_query_sets(queries: List[Dict]) -> List[NamedQuerySet]:
         if names.count(name) > 1:
             seen[name] = seen.get(name, 0) + 1
             name = f"{name} {seen[name]}"
-        query_set = stories if query["heading"].startswith("Story") else registry
         sparql = "\n".join(line.rstrip() for line in query["lines"]).strip()
         sparql = BARE_PREFIX.sub(r"\1<\2>", sparql)
         named_query = NamedQuery(
@@ -164,19 +163,17 @@ def to_query_sets(queries: List[Dict]) -> List[NamedQuerySet]:
             sparql=sparql,
         )
         query_set.add(named_query)
-    query_sets = [registry, stories]
-    return query_sets
+    return query_set
 
 
 def main():
     """
-    extract the queries and write the query sets
+    extract the queries and write the query set
     """
-    queries = find_queries(read_lines(fetch_pdf()))
-    for query_set in to_query_sets(queries):
-        path = f"query-sets/{query_set.namespace}@{query_set.domain}.yaml"
-        query_set.save_to_yaml_file(path)
-        print(f"{len(query_set)} queries -> {path}")
+    query_set = to_query_set(find_queries(read_lines(fetch_pdf())))
+    path = f"query-sets/{query_set.namespace}@{query_set.domain}.yaml"
+    query_set.save_to_yaml_file(path)
+    print(f"{len(query_set)} queries -> {path}")
 
 
 if __name__ == "__main__":

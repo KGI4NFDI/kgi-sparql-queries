@@ -72,9 +72,9 @@ class TestHarvest(unittest.TestCase):
 
     def test_pinned_sources(self):
         """
-        test that the committed query sets of the pinned D3.1 sources are complete
+        test that the committed query set of the pinned D3.1 source is complete
         """
-        expected = {"d3.1": 20, "d3.1-stories": 9}
+        expected = {"d3.1": 29}
         for source in load_sources():
             if source.get("format") != "pinned":
                 continue
@@ -85,12 +85,12 @@ class TestHarvest(unittest.TestCase):
 
     def test_pinned_queries_are_valid(self):
         """
-        test that every query of the pinned D3.1 sources is valid SPARQL,
+        test that every query of the pinned D3.1 source is valid SPARQL,
         after adding the prefixes it uses without declaring them
         """
         # valid, but a SERVICE inside a SERVICE breaks rdflib's parser:
         # RDFLib/rdflib#2136, fixed by RDFLib/rdflib#3408, not released yet
-        known_failures = {"listing-1-9--d3.1-stories@kgi.services.base4nfdi.de"}
+        known_failures = {"listing-1-9--d3.1@kgi.services.base4nfdi.de"}
         for source in load_sources():
             if source.get("format") != "pinned":
                 continue

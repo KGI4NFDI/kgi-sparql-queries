@@ -68,15 +68,8 @@ sources:
     format: wikitext
     url: https://mbi.kgi.uni-mannheim.de/wiki/SPARQL_examples
   - id: D31
-    name: KGI4NFDI deliverable D3.1, Q1 to Q16d
+    name: KGI4NFDI deliverable D3.1
     namespace: d3.1
-    domain: kgi.services.base4nfdi.de
-    graph: kgi-registry
-    format: pinned
-    url: https://doi.org/10.5281/zenodo.15780729
-  - id: D31S
-    name: KGI4NFDI deliverable D3.1, query exploration stories
-    namespace: d3.1-stories
     domain: kgi.services.base4nfdi.de
     graph: various
     format: pinned
