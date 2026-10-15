@@ -1,0 +1,68 @@
+domain: data.gesis.org
+namespace: gesiskg
+target_graph_name: gesiskg
+queries:
+- name: SPARQL endopint 1
+  namespace: gesiskg
+  domain: data.gesis.org
+  query_id: sparql-endopint-1--gesiskg@data.gesis.org
+  sparql: "PREFIX schema: <https://schema.org/>\nSELECT ?id ?title\nWHERE {?id a schema:ScholarlyArticle.\n\
+    \       ?id schema:name ?title.\n} \nLIMIT 10000"
+  url: https://data.gesis.org/gesiskg/
+  title: SPARQL endopint 1
+  description: ''
+- name: SPARQL endopint 2
+  namespace: gesiskg
+  domain: data.gesis.org
+  query_id: sparql-endopint-2--gesiskg@data.gesis.org
+  sparql: |-
+    SELECT *
+    WHERE {<https://data.gesis.org/gesiskg/resource/ZA5282> ?p ?o}
+  url: https://data.gesis.org/gesiskg/
+  title: SPARQL endopint 2
+  description: ''
+- name: SPARQL endopint 3
+  namespace: gesiskg
+  domain: data.gesis.org
+  query_id: sparql-endopint-3--gesiskg@data.gesis.org
+  sparql: "PREFIX schema: <https://schema.org/>\nSELECT ?publication ?publication_title\
+    \ \n    ?dataset ?dataset_title\nWHERE {\n    ?publication schema:about ?topic.\
+    \  \n    ?topic schema:name \"Migration\"@en.\n    ?publication a schema:ScholarlyArticle.\n\
+    \    ?publication schema:citation ?dataset. \n    ?dataset a schema:Dataset.\n\
+    \    ?publication schema:name ?publication_title.\n    ?dataset schema:name ?dataset_title.\n\
+    } LIMIT 1000"
+  url: https://data.gesis.org/gesiskg/
+  title: SPARQL endopint 3
+  description: ''
+- name: SPARQL endopint 4
+  namespace: gesiskg
+  domain: data.gesis.org
+  query_id: sparql-endopint-4--gesiskg@data.gesis.org
+  sparql: "PREFIX schema: <https://schema.org/>\nSELECT ?year (COUNT(?publication)\
+    \ AS ?count)\nWHERE {\n    ?publication a schema:ScholarlyArticle.\n    ?publication\
+    \ schema:citation ?dataset.\n    ?dataset a schema:Dataset. \n    ?dataset schema:about\
+    \ ?topic.  \n    ?topic schema:name \"Migration\"@en.\n    ?publication schema:datePublished\
+    \ ?year.\n} GROUP BY ?year ORDER BY ?year"
+  url: https://data.gesis.org/gesiskg/
+  title: SPARQL endopint 4
+  description: ''
+- name: SPARQL endopint 5
+  namespace: gesiskg
+  domain: data.gesis.org
+  query_id: sparql-endopint-5--gesiskg@data.gesis.org
+  sparql: |-
+    PREFIX schema: <https://schema.org/>
+    PREFIX gesiskg: <https://data.gesis.org/gesiskg/schema/>
+    PREFIX ddi: <http://rdf-vocabulary.ddialliance.org/lifecycle#>
+    SELECT *
+    WHERE {
+        ?publication a schema:ScholarlyArticle.
+        ?publication schema:name ?publication_title .
+        ?variable a ddi:Variable.
+        ?publication schema:citation ?variable.
+        ?variable schema:name ?variable_title .
+        ?variable gesiskg:studyGroup "ALLBUS"@en
+    }
+  url: https://data.gesis.org/gesiskg/
+  title: SPARQL endopint 5
+  description: ''
