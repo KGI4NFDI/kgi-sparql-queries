@@ -79,4 +79,5 @@ sources:
     namespace: examples
     domain: portal.mardi4nfdi.de
     graph: mardi
+    format: wikitext
     url: https://portal.mardi4nfdi.de/wiki/Project:Sample_queries
