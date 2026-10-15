@@ -1,0 +1,122 @@
+domain: semantic-kompakkt.de
+namespace: examples
+target_graph_name: semantic-kompakkt
+queries:
+- name: Overview of all classes and their subclasses
+  namespace: examples
+  domain: semantic-kompakkt.de
+  query_id: overview-of-all-classes-and-their-subclasses--examples@semantic-kompakkt.de
+  sparql: "\n\n#defaultView:Graph \n\nSELECT Distinct ?classes ?classesLabel ?subclasses\
+    \ ?subclassesLabel  WHERE {\n  SERVICE wikibase:label { bd:serviceParam wikibase:language\
+    \ \"[AUTO_LANGUAGE],en\". }\n  \n  {?classes owl:equivalentClass ?x.} Union\n\
+    \  {?subclasses tibt:P2 ?classes.}\n}\n"
+  url: https://wikibase.semantic-kompakkt.de/wiki/Query/Examples#Overview_of_all_classes_and_their_subclasses
+  title: Overview of all classes and their subclasses
+  description: ''
+- name: Overview of types of of human-made objects and instances
+  namespace: examples
+  domain: semantic-kompakkt.de
+  query_id: overview-of-types-of-of-human-made-objects-and-instances--examples@semantic-kompakkt.de
+  sparql: "\n\n#defaultView:Tree\n\nSELECT ?class ?classLabel ?type ?typeLabel ?item\
+    \ ?itemLabel\nWHERE\n{  \n  VALUES ?class {tib:Q6}\n  ?item tibt:P1 ?class.\n\
+    \  ?item tibt:P97 ?type.\n  SERVICE wikibase:label { bd:serviceParam wikibase:language\
+    \ \"[AUTO_LANGUAGE],en\". }\n}\n\n"
+  url: https://wikibase.semantic-kompakkt.de/wiki/Query/Examples#Overview_of_types_of_of_human-made_objects_and_instances
+  title: Overview of types of of human-made objects and instances
+  description: ''
+- name: Overview of types of conceptual objects and instances
+  namespace: examples
+  domain: semantic-kompakkt.de
+  query_id: overview-of-types-of-conceptual-objects-and-instances--examples@semantic-kompakkt.de
+  sparql: " \n\n#defaultView:Tree\n\nSELECT ?class ?classLabel ?type ?typeLabel ?item\
+    \ ?itemLabel\nWHERE\n{  \n  VALUES ?class {tib:Q17}\n  ?item tibt:P1 ?class.\n\
+    \  ?item tibt:P97 ?type.\n  SERVICE wikibase:label { bd:serviceParam wikibase:language\
+    \ \"[AUTO_LANGUAGE],en\". }\n}\n\n"
+  url: https://wikibase.semantic-kompakkt.de/wiki/Query/Examples#Overview_of_types_of_conceptual_objects_and_instances
+  title: Overview of types of conceptual objects and instances
+  description: ''
+- name: All paintings from the cycle "Belagerungsszenen des Langen Türkenkriegs" with
+    some properties
+  namespace: examples
+  domain: semantic-kompakkt.de
+  query_id: all-paintings-from-the-cycle-belagerungsszenen-des-langen-türkenkriegs-with-some-properties--examples@semantic-kompakkt.de
+  sparql: " \nPREFIX tib: <https://wikibase.semantic-kompakkt.de/entity/>\nPREFIX\
+    \ tibt: <https://wikibase.semantic-kompakkt.de/prop/direct/>\nPREFIX tibp: <https://wikibase.semantic-kompakkt.de/prop/>\n\
+    PREFIX tibps: <https://wikibase.semantic-kompakkt.de/prop/statement/>\nPREFIX\
+    \ tibpq: <https://wikibase.semantic-kompakkt.de/prop/qualifier/>\nPREFIX tibpqv:\
+    \ <https://wikibase.semantic-kompakkt.de/prop/qualifier/value/>\n\n#All paintings\
+    \ from \"Belagerungsszenen des Langen Türkenkriegs\"\n\nSELECT ?item ?itemLabel\
+    \ ?creationDateStart ?creationDateEnd ?inscription ?materialLabel ?techniqueLabel\n\
+    WHERE { \n    ?item tibt:P6 tib:Q376.\n    OPTIONAL { ?item tibp:P8 [ tibps:P8\
+    \ tib:Q25; tibpqv:P10 [wikibase:timePrecision \"9\"^^xsd:integer ; wikibase:timeValue\
+    \ ?creationDateStart ] ]. }\n    OPTIONAL { ?item tibp:P8 [ tibps:P8 tib:Q25;\
+    \ tibpqv:P11 [wikibase:timePrecision \"9\"^^xsd:integer ; wikibase:timeValue ?creationDateEnd\
+    \ ] ]. }\n    OPTIONAL { ?item tibt:P25 ?inscription. }\n    OPTIONAL { ?item\
+    \ tibt:P22 ?material. }\n    OPTIONAL {  ?item tibt:P65 ?technique. }\n    SERVICE\
+    \ wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }\n\
+    } \n"
+  url: https://wikibase.semantic-kompakkt.de/wiki/Query/Examples#All_paintings_from_the_cycle_"Belagerungsszenen_des_Langen_Türkenkriegs"_with_some_properties
+  title: All paintings from the cycle "Belagerungsszenen des Langen Türkenkriegs"
+    with some properties
+  description: ''
+- name: Items that share an Iconclass notation
+  namespace: examples
+  domain: semantic-kompakkt.de
+  query_id: items-that-share-an-iconclass-notation--examples@semantic-kompakkt.de
+  sparql: " \n\n#defaultView:Graph\n\nSELECT ?item1 ?item1Label  ?iconclassLabel ?iconclass\
+    \ ?rgb ?rgb2\nWHERE\n{\n  ?item1 tibt:P64 ?iconclass.\n  ?item2 tibt:P64 ?iconclass.\n\
+    \  BIND('D88888' as ?rgb)\n  SERVICE wikibase:label { bd:serviceParam wikibase:language\
+    \ \"[AUTO_LANGUAGE],en\". }\n  FILTER(?item1 != ?item2) .\n}\n\n"
+  url: https://wikibase.semantic-kompakkt.de/wiki/Query/Examples#Items_that_share_an_Iconclass_notation
+  title: Items that share an Iconclass notation
+  description: ''
+- name: Simple query to get more information about Weikersheim castle (via owl:sameAs
+    method)
+  namespace: examples
+  domain: semantic-kompakkt.de
+  query_id: simple-query-to-get-more-information-about-weikersheim-castle-via-owl-sameas-method--examples@semantic-kompakkt.de
+  sparql: " \n\nPREFIX wd: <http://www.wikidata.org/entity/>\nPREFIX wdt: <http://www.wikidata.org/prop/direct/>\n\
+    PREFIX wdqs: <https://query.wikidata.org/sparql>\n\nSELECT ?weikersheim ?weikersheimLabel\
+    \ ?VIAF ?image\nWHERE{\n?weikersheim tibt:P97 tib:Q201.\n?weikersheim owl:sameAs\
+    \ ?WDMatch. \n  SERVICE wikibase:label { bd:serviceParam wikibase:language \"\
+    [AUTO_LANGUAGE],en\". }\n  SERVICE wdqs: {\n    ?WDMatch wdt:P214 ?VIAF.\n   \
+    \ ?WDMatch wdt:P18 ?image\n  }\n}\n"
+  url: https://wikibase.semantic-kompakkt.de/wiki/Query/Examples#Simple_query_to_get_more_information_about_Weikersheim_castle_(via_owl:sameAs_method)
+  title: Simple query to get more information about Weikersheim castle (via owl:sameAs
+    method)
+  description: ''
+- name: Simple query to get more information about Weikersheim castle (via GND external
+    ID method)
+  namespace: examples
+  domain: semantic-kompakkt.de
+  query_id: simple-query-to-get-more-information-about-weikersheim-castle-via-gnd-external-id-method--examples@semantic-kompakkt.de
+  sparql: " \n\nPREFIX wd: <http://www.wikidata.org/entity/>\nPREFIX wdt: <http://www.wikidata.org/prop/direct/>\n\
+    PREFIX wdqs: <https://query.wikidata.org/sparql>\n\nSELECT ?weikersheim ?weikersheimLabel\
+    \ ?GNDMatch ?image\nWHERE{\n?weikersheim tibt:P97 tib:Q201.\n?weikersheim tibt:P102\
+    \ ?GNDMatch. \n  \n  SERVICE wikibase:label { bd:serviceParam wikibase:language\
+    \ \"[AUTO_LANGUAGE],en\". }\n  SERVICE wdqs: {\n    ?WDMatch wdt:P227 ?GNDMatch.\n\
+    \    ?WDMatch wdt:P18 ?image\n  }\n}\n\n"
+  url: https://wikibase.semantic-kompakkt.de/wiki/Query/Examples#Simple_query_to_get_more_information_about_Weikersheim_castle_(via_GND_external_ID_method)
+  title: Simple query to get more information about Weikersheim castle (via GND external
+    ID method)
+  description: ''
+- name: Castles of Renaissance architectural style within 100km of Weikersheim castle
+  namespace: examples
+  domain: semantic-kompakkt.de
+  query_id: castles-of-renaissance-architectural-style-within-100km-of-weikersheim-castle--examples@semantic-kompakkt.de
+  sparql: " \n\n#defaultView:Map\n\n# Find all castles in the Wikibase; look on Wikidata\
+    \ for other renaissance castles nearby\nPREFIX wd: <http://www.wikidata.org/entity/>\n\
+    PREFIX wdt: <http://www.wikidata.org/prop/direct/>\nPREFIX wdqs: <https://query.wikidata.org/sparql>\n\
+    \nSELECT  ?castle ?castleLabel ?location ?image\nWHERE {\n  #Find all castles\
+    \ and their coordinates\n  ?item tibt:P97 tib:Q201.\n  ?item tibt:P37 ?coordinates.\n\
+    \  \n  #Query wikidata\n  SERVICE wdqs: {\n    \n    #Find castles with renaissance\
+    \ architectural style\n    ?castle wdt:P31 wd:Q751876.\n    ?castle wdt:P149 wd:Q236122.\n\
+    \    \n    #Look for those castles in a radius of 100km around our castle\n  \
+    \  SERVICE wikibase:around { \n      ?castle wdt:P625 ?location . \n      bd:serviceParam\
+    \ wikibase:center ?coordinates . \n      bd:serviceParam wikibase:radius \"100\"\
+    \ . \n    }\n    \n    #Get labels from Wikidata\n    ?castle rdfs:label ?castleLabel.\n\
+    \    OPTIONAL { ?castle wdt:P18 ?image. }\n    FILTER((LANG(?castleLabel)) = \"\
+    de\")\n  }\n}\n"
+  url: https://wikibase.semantic-kompakkt.de/wiki/Query/Examples#Castles_of_Renaissance_architectural_style_within_100km_of_Weikersheim_castle
+  title: Castles of Renaissance architectural style within 100km of Weikersheim castle
+  description: ''

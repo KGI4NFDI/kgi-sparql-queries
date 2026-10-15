@@ -1,0 +1,109 @@
+domain: akf.kgi.uni-mannheim.de
+namespace: examples
+target_graph_name: akf
+queries:
+- name: Companies with labels, ISINs and WKNs
+  namespace: examples
+  domain: akf.kgi.uni-mannheim.de
+  query_id: companies-with-labels-isins-and-wkns--examples@akf.kgi.uni-mannheim.de
+  sparql: |2
+
+    SELECT DISTINCT ?company ?companyLabel ?ISIN ?WKN WHERE {
+      ?company rdfs:label ?companyLabel;
+        wdt:P325 wd:Q1.
+      OPTIONAL { ?company wdt:P127 ?ISIN. }
+      OPTIONAL { ?company wdt:P4 ?WKN. }
+      FILTER((LANG(?companyLabel)) = "de")
+    }
+  url: https://akf.kgi.uni-mannheim.de/wiki/SPARQL_examples#Companies_with_labels,_ISINs_and_WKNs
+  title: Companies with labels, ISINs and WKNs
+  description: ''
+- name: Companies with official names and time ranges for them
+  namespace: examples
+  domain: akf.kgi.uni-mannheim.de
+  query_id: companies-with-official-names-and-time-ranges-for-them--examples@akf.kgi.uni-mannheim.de
+  sparql: |2
+
+    SELECT DISTINCT ?company ?official_name (year(?start_time) as ?start_year) (year(?end_time) as ?end_year) WHERE {
+      ?company wdt:P325 wd:Q1.
+      ?company p:P346 [ ps:P346 ?official_name; pq:P79 ?start_time ; pq:P76 ?end_time ]
+
+    }
+  url: https://akf.kgi.uni-mannheim.de/wiki/SPARQL_examples#Companies_with_official_names_and_time_ranges_for_them
+  title: Companies with official names and time ranges for them
+  description: ''
+- name: Companies with labels, ISINs, WKNs, BvD IDs, Crefo numbers, LEIs, ROR IDs,
+    GND IDs and Wikidata IDs
+  namespace: examples
+  domain: akf.kgi.uni-mannheim.de
+  query_id: companies-with-labels-isins-wkns-bvd-ids-crefo-numbers-leis-ror-ids-gnd-ids-and-wikidata-ids--examples@akf.kgi.uni-mannheim.de
+  sparql: "\nSELECT DISTINCT ?company ?companyLabel ?ISIN ?WKN ?BvD_ID ?CREFO ?LEI\
+    \ ?ROR_ID ?GND_ID ?WikidataID WHERE {\n  ?company rdfs:label ?companyLabel;\n\
+    \    wdt:P325 wd:Q1.\n  #OPTIONAL { ?company wdt:P3 ?AKF_ID. }\n  OPTIONAL { ?company\
+    \ wdt:P127 ?ISIN. }\n  OPTIONAL { ?company wdt:P4 ?WKN. }\n  OPTIONAL { ?company\
+    \ wdt:P6 ?BvD_ID. }\n  OPTIONAL { ?company wdt:P5 ?CREFO. }\n  OPTIONAL { ?company\
+    \ wdt:P146 ?LEI. }\n  OPTIONAL { ?company wdt:P126 ?ROR_ID. }\n  OPTIONAL { ?company\
+    \ wdt:P179 ?GND_ID. }\n  OPTIONAL { ?company wdt:P2 ?WikidataID. }\n  FILTER((LANG(?companyLabel))\
+    \ = \"de\")\n} \nORDER BY ?companyLabel\n"
+  url: https://akf.kgi.uni-mannheim.de/wiki/SPARQL_examples#Companies_with_labels,_ISINs,_WKNs,_BvD_IDs,_Crefo_numbers,_LEIs,_ROR_IDs,_GND_IDs_and_Wikidata_IDs
+  title: Companies with labels, ISINs, WKNs, BvD IDs, Crefo numbers, LEIs, ROR IDs,
+    GND IDs and Wikidata IDs
+  description: ''
+- name: Entities
+  namespace: examples
+  domain: akf.kgi.uni-mannheim.de
+  query_id: entities--examples@akf.kgi.uni-mannheim.de
+  sparql: |2
+
+    SELECT DISTINCT ?entity ?entityLabel WHERE {
+      ?entity rdfs:label ?entityLabel.
+      FILTER((LANG(?entityLabel)) = "en")
+    }
+  url: https://akf.kgi.uni-mannheim.de/wiki/SPARQL_examples#Entities
+  title: Entities
+  description: ''
+- name: Entities with labels
+  namespace: examples
+  domain: akf.kgi.uni-mannheim.de
+  query_id: entities-with-labels--examples@akf.kgi.uni-mannheim.de
+  sparql: |2
+
+    SELECT DISTINCT ?entity ?entityLabel WHERE {
+      ?entity rdfs:label ?entityLabel.
+      FILTER((LANG(?entityLabel)) = "en")
+    }
+  url: https://akf.kgi.uni-mannheim.de/wiki/SPARQL_examples#Entities_with_labels
+  title: Entities with labels
+  description: ''
+- name: Properties
+  namespace: examples
+  domain: akf.kgi.uni-mannheim.de
+  query_id: properties--examples@akf.kgi.uni-mannheim.de
+  sparql: |2
+
+    SELECT DISTINCT ?propertyWikibase ?propertyLabel ?propertyAlias ?propertyDescription ?propertyType WHERE {
+      ?propertyWikibase wikibase:directClaim ?p;
+        wikibase:propertyType ?propertyType;
+        schema:description ?propertyDescription;
+        rdfs:label ?propertyLabel.
+      OPTIONAL { ?propertyWikibase skos:altLabel ?propertyAlias. }
+    }
+  url: https://akf.kgi.uni-mannheim.de/wiki/SPARQL_examples#Properties
+  title: Properties
+  description: ''
+- name: Properties with labels, aliases, descriptions and datatypes
+  namespace: examples
+  domain: akf.kgi.uni-mannheim.de
+  query_id: properties-with-labels-aliases-descriptions-and-datatypes--examples@akf.kgi.uni-mannheim.de
+  sparql: |2
+
+    SELECT DISTINCT ?propertyWikibase ?propertyLabel ?propertyAlias ?propertyDescription ?propertyType WHERE {
+      ?propertyWikibase wikibase:directClaim ?p;
+        wikibase:propertyType ?propertyType;
+        schema:description ?propertyDescription;
+        rdfs:label ?propertyLabel.
+      OPTIONAL { ?propertyWikibase skos:altLabel ?propertyAlias. }
+    }
+  url: https://akf.kgi.uni-mannheim.de/wiki/SPARQL_examples#Properties_with_labels,_aliases,_descriptions_and_datatypes
+  title: Properties with labels, aliases, descriptions and datatypes
+  description: ''
