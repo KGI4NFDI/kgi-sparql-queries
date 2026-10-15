@@ -1,6 +1,7 @@
 # where each knowledge graph publishes its example queries
 # a source is an HTML page with the queries in pre or textarea elements,
-# or with format: wikitext a wiki page with the queries in SPARQL templates
+# with format: wikitext a wiki page with the queries in SPARQL templates,
+# or with format: pinned a query set written by a script in scripts/ and kept by the harvest
 sources:
   - id: KGR69
     name: Wikidata
@@ -66,3 +67,10 @@ sources:
     graph: mbi
     format: wikitext
     url: https://mbi.kgi.uni-mannheim.de/wiki/SPARQL_examples
+  - id: D31
+    name: KGI4NFDI deliverable D3.1
+    namespace: d3.1
+    domain: kgi.services.base4nfdi.de
+    graph: various
+    format: pinned
+    url: https://doi.org/10.5281/zenodo.15780729

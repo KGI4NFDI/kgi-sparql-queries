@@ -23,6 +23,13 @@ dependencies = [
   "requests>=2.31",
 ]
 
+[project.optional-dependencies]
+# only needed to rebuild the pinned sources of data/sources.yaml,
+# e.g. with scripts/extract_d31.py
+pinned = [
+  "pypdf>=4",
+]
+
 [project.scripts]
 kgi-queries = "kgi_example_queries.cli:main"
 
