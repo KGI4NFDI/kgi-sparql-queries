@@ -79,9 +79,13 @@ query copied by hand states where, when and how it was copied.
 | `data/sources.yaml` | where each knowledge graph publishes its examples |
 | `kgi_example_queries/` | the harvester package |
 | `query-sets/<namespace>@<domain>.yaml` | generated: one snapquery named query set per knowledge graph |
+| `tests/known_invalid_queries.yaml` | the committed queries snapquery's SPARQL parser rejects, grouped by cause |
 
 `query-sets/` is harvester output: change the manifest or the harvester, not
 the generated files.
+
+A query set change that brings in an invalid query fails the tests until the
+query is listed in `tests/known_invalid_queries.yaml` under its cause.
 
 ## Conventions
 
