@@ -1,0 +1,84 @@
+# the queries in query-sets/ that snapquery's SPARQL parser rejects, grouped by cause (#21)
+# tests/test_query_sets.py fails for an invalid query that is not listed here,
+# and for a listed query that has become valid or has left its query set
+harvest-truncated:
+  description: "cut off mid-query; snapquery's extractor keeps only the first template argument, so the text probably ends at a |"
+  queries:
+    - ancestors-of-willem-alexander-of-the-netherlands--examples@wikidata.org
+    - books-or-literary-works-published-before-1830-with-place-of-publication-or-narrative-location-coordinates--examples@wikidata.org
+    - canadian-subjects-with-no-english-article-in-wikipedia--examples@wikidata.org
+    - find-drugs-for-cancers-that-target-genes-related-to-cell-proliferation--examples@wikidata.org
+    - french-heads-of-government-by-length-of-service--examples@wikidata.org
+    - humans-who-died-on-a-specific-date-on-the-english-wikipedia-ordered-by-label--examples@wikidata.org
+    - images-of-organic-acids--examples@wikidata.org
+    - number-of-ministers-who-are-themselves-children-of-a-minister-per-country--examples@wikidata.org
+    - people-born-in-lisbon-without-articles-on-ptwiki-but-with-articles-on-other-wikipedias--examples@wikidata.org
+    - un-member-states--examples@wikidata.org
+    - winners-of-the-2024-summer-olympics--examples@wikidata.org
+harvest-markup:
+  description: "wiki markup in the text: {{!}}, {{int:…}}, <translate> text outside a comment, an HTML comment"
+  queries:
+    - cats--examples@wikidata.org
+    - former-capitals--examples@wikidata.org
+    - glaciers-map--examples@wikidata.org
+    - how-many-musicians-died-at-a-certain-age--examples@wikidata.org
+    - list-of-countries-in-1754--examples@wikidata.org
+    - most-used-properties--examples@wikidata.org
+    - paintings-by-rembrandt-in-the-louvre-or-the-rijkmuseum--examples@wikidata.org
+    - places-that-are-below-10-meters-above-sea-level--examples@wikidata.org
+harvest-empty:
+  description: "empty, or just true"
+  queries:
+    - academy-award-data--examples@wikidata.org
+    - scholarly-articles-with-zika-in-the-item-label--examples@wikidata.org
+    - scientific-articles-that-have-subject-zika-virus-or-fever-and-that-are-used-as-a-reference-in-another-item--examples@wikidata.org
+blazegraph-named-subquery:
+  description: "Blazegraph named subquery WITH { … } AS %name"
+  queries:
+    - fictional-characters-whose-birth-death-date-is-in-the-current-decade--examples@wikidata.org
+    - items-about-authors-with-a-wikispecies-page--examples@wikidata.org
+    - items-with-a-wikispecies-sitelink--examples@wikidata.org
+    - items-with-the-exact-label-admiral-in-at-least-one-language--examples@wikidata.org
+    - largest-cities-of-the-world--examples@wikidata.org
+    - metabolite-metabolite-interactions-mostly-conversions-and-their-pka-change-federated-query--examples@wikidata.org
+    - most-prolific-fathers--examples@wikidata.org
+    - people-deceased-in-2018-ordered-by-the-number-of-sitelinks--examples@wikidata.org
+    - recent-events--examples@wikidata.org
+    - scientific-journals-with-editors-on-twitter--examples@wikidata.org
+    - solubilities-of-chemicals--examples@wikidata.org
+    - the-100-most-translated-concepts-in-the-lexeme-namespace--examples@wikidata.org
+    - who-discovered-the-most-asteroids--examples@wikidata.org
+endpoint-prefix:
+  description: "prefix the endpoint predefines: wdsubgraph, tib, tibt, MBI's own wdt"
+  queries:
+    - authors-of-scientific-articles-by-occupation--examples@wikidata.org
+    - birthdays-of-authors-in-the-wikidata-the-making-of-article-using-hint-to-avoid-timeout--examples@wikidata.org
+    - companies-in-mbi-kg-with-the-labels-identical-to-aliases-of-companies-at-wikidata--examples@mbi.kgi.uni-mannheim.de
+    - items-that-share-an-iconclass-notation--examples@semantic-kompakkt.de
+    - most-popular-subjects-of-scientific-articles--examples@wikidata.org
+    - overview-of-all-classes-and-their-subclasses--examples@semantic-kompakkt.de
+    - overview-of-types-of-conceptual-objects-and-instances--examples@semantic-kompakkt.de
+    - overview-of-types-of-of-human-made-objects-and-instances--examples@semantic-kompakkt.de
+    - simple-query-to-get-more-information-about-weikersheim-castle-via-gnd-external-id-method--examples@semantic-kompakkt.de
+    - simple-query-to-get-more-information-about-weikersheim-castle-via-owl-sameas-method--examples@semantic-kompakkt.de
+    - wikisource-pages-for-authors-of-scientific-articles--examples@wikidata.org
+    - works-from-the-biodiversity-heritage-library-combining-results-from-both-graphs-with-union--examples@wikidata.org
+virtuoso-syntax:
+  description: "Virtuoso syntax: and for &&, count(?x) AS ?n without brackets"
+  queries:
+    - example-queries-1--claimskg@data.gesis.org
+    - example-queries-4--claimskg@data.gesis.org
+    - examples-1--tweetscov19@data.gesis.org
+    - examples-2--tweetscov19@data.gesis.org
+    - examples-3--tweetscov19@data.gesis.org
+    - examples-4--tweetskb@data.gesis.org
+rdflib-nested-service:
+  description: "a SERVICE inside a SERVICE breaks rdflib's parser; fixed by RDFLib/rdflib#3408, not released yet"
+  issue: https://github.com/RDFLib/rdflib/issues/2136
+  queries:
+    - articles-by-lydia-pintscher-using-the-wikibase-label-service-in-both-graphs--examples@wikidata.org
+    - authors-of-scientific-articles-who-received-a-nobel-prize--examples@wikidata.org
+    - castles-of-renaissance-architectural-style-within-100km-of-weikersheim-castle--examples@semantic-kompakkt.de
+    - getting-basic-information-for-one-item--examples@wikidata.org
+    - listing-1-9--d3.1@kgi.services.base4nfdi.de
+    - using-values-for-extracting-scientific-articles-of-specific-authors--examples@wikidata.org
