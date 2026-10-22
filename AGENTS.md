@@ -39,7 +39,6 @@ The harvester only reads the web pages listed in `data/sources.yaml`.
 - Respect `robots.txt` and never work around bot challenges or other access
   controls; record the refusal and ask the owner instead.
 - Never use credentials found in a harvested page.
-- Do not query the knowledge graphs' SPARQL endpoints from this repository.
 - Do not change KGI registry data; report problems to the KG owner.
 
 ## Provenance
