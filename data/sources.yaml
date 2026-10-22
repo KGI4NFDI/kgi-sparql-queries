@@ -1,7 +1,9 @@
 # where each knowledge graph publishes its example queries
 # a source is an HTML page with the queries in pre or textarea elements,
 # with format: wikitext a wiki page with the queries in SPARQL templates,
-# or with format: pinned a query set written by a script in scripts/ and kept by the harvest
+# or with format: pinned a query set written by a script in scripts/ and kept by the harvest;
+# endpoint is the SPARQL endpoint the source publishes its queries for, from the KGI registry
+# (kgi-interop-monitor's snapshot), with the SPARQL path where the registry names a query UI
 sources:
   - id: KGR69
     name: Wikidata
@@ -10,42 +12,49 @@ sources:
     graph: wikidata
     format: wikitext
     url: https://www.wikidata.org/wiki/Wikidata:SPARQL_query_service/queries/examples
+    endpoint: https://query.wikidata.org/sparql
   - id: KGR4
     name: ClaimsKG
     namespace: claimskg
     domain: data.gesis.org
     graph: claimskg
     url: https://data.gesis.org/claimskg
+    endpoint: https://data.gesis.org/claimskg/sparql
   - id: KGR80
     name: GESIS KG
     namespace: gesiskg
     domain: data.gesis.org
     graph: gesiskg
     url: https://data.gesis.org/gesiskg/
+    endpoint: https://data.gesis.org/gesiskg/sparql
   - id: KGR48
     name: Question Features Sample
     namespace: questionfeaturessample
     domain: data.gesis.org
     graph: questionfeaturessample
     url: https://data.gesis.org/questionfeaturessample
+    endpoint: https://data.gesis.org/questionfeaturessample/sparql
   - id: KGR57
     name: SoMeSci
     namespace: somesci
     domain: data.gesis.org
     graph: somesci
     url: https://data.gesis.org/somesci
+    endpoint: https://data.gesis.org/somesci/sparql
   - id: KGR62
     name: TweetsCov19
     namespace: tweetscov19
     domain: data.gesis.org
     graph: tweetscov19
     url: https://data.gesis.org/tweetscov19/
+    endpoint: https://data.gesis.org/tweetscov19/sparql
   - id: KGR65
     name: TweetsKB
     namespace: tweetskb
     domain: data.gesis.org
     graph: tweetskb
     url: https://data.gesis.org/tweetskb
+    endpoint: https://data.gesis.org/tweetskb/sparql
   - id: KGR51
     name: Semantic Kompakkt
     namespace: examples
@@ -53,6 +62,8 @@ sources:
     graph: semantic-kompakkt
     format: wikitext
     url: https://wikibase.semantic-kompakkt.de/wiki/Query/Examples
+    # Wikibase Suite's default path, not verified: the host returned 503 on 2026-10-22
+    endpoint: https://query.semantic-kompakkt.de/proxy/wdqs/bigdata/namespace/wdq/sparql
   - id: KGR1
     name: Aktienführer Knowledge Graph
     namespace: examples
@@ -60,6 +71,7 @@ sources:
     graph: akf
     format: wikitext
     url: https://akf.kgi.uni-mannheim.de/wiki/SPARQL_examples
+    endpoint: https://query.akf.kgi.uni-mannheim.de/proxy/wdqs/bigdata/namespace/wdq/sparql
   - id: KGR31
     name: MaschinenBauIndustrie KG
     namespace: examples
@@ -67,6 +79,8 @@ sources:
     graph: mbi
     format: wikitext
     url: https://mbi.kgi.uni-mannheim.de/wiki/SPARQL_examples
+    # Wikibase Suite's default path, not verified: the host returned 503 on 2026-10-22
+    endpoint: https://query.mbi.kgi.uni-mannheim.de/proxy/wdqs/bigdata/namespace/wdq/sparql
   - id: D31
     name: KGI4NFDI deliverable D3.1
     namespace: d3.1
@@ -74,3 +88,4 @@ sources:
     graph: various
     format: pinned
     url: https://doi.org/10.5281/zenodo.15780729
+    endpoint: https://sparql.kgi.services.base4nfdi.de/api/
