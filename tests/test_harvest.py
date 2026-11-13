@@ -44,6 +44,7 @@ class TestHarvest(unittest.TestCase):
         self.assertTrue(len(sources) > 0)
         for source in sources:
             self.assertTrue(source["url"].startswith("https://"), source["id"])
+            self.assertTrue(source["endpoint"].startswith("https://"), source["id"])
 
     def test_harvest_wikitext(self):
         """
