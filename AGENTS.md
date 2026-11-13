@@ -79,6 +79,7 @@ query copied by hand states where, when and how it was copied.
 | `kgi_example_queries/` | the harvester package |
 | `query-sets/<namespace>@<domain>.yaml` | generated: one snapquery named query set per knowledge graph |
 | `tests/known_invalid_queries.yaml` | the committed queries snapquery's SPARQL parser rejects, grouped by cause |
+| `.github/ISSUE_TEMPLATE/`, `.github/pull_request_template.md` | issue (standard, bugfix, epic) and pull request templates, adapted from MaRDI4NFDI's; every issue states acceptance criteria and every pull request says which issue it closes |
 
 `query-sets/` is harvester output: change the manifest or the harvester, not
 the generated files.
